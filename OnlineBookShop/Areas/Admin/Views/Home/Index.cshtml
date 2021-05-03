@@ -1,0 +1,59 @@
+﻿@*@model IEnumerable<OnlineBookShop.Support_Class.BookDetails>*@
+
+@model PagedList.IPagedList<OnlineBookShop.Support_Class.BookDetails>
+@using PagedList.Mvc
+@using PagedList
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">LIST BOOKS</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên sách</th>
+                        <th>Giá bán</th>
+                        <th>Ảnh bìa</th>
+                        <th>SL tồn</th>
+                        <th>Tên TG</th>
+                        <th>Tên CD</th>
+                        <th>Tên NXB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.TenSach</td>
+                            <td>@item.GiaBan</td>
+                            <td>@item.AnhBia</td>
+                            <td>@item.SoLuongTon</td>
+                            <td>@item.HoTenTG</td>
+                            <td>@item.TenCD</td>
+                            <td>@item.TenNXB</td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+        </div>
+    </div>
+</div>
