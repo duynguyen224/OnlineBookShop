@@ -7,6 +7,7 @@ using OnlineBookShop.Entities;
 using System.Data.SqlClient;
 using OnlineBookShop.Support_Class;
 using PagedList;
+using System.IO;
 
 namespace OnlineBookShop.DAO
 {
@@ -39,6 +40,13 @@ namespace OnlineBookShop.DAO
             NhaXuatBanDao nxbDao = new NhaXuatBanDao();
             TacGiaDao tgDao = new TacGiaDao();
             ThamGiaDao thamgiaDao = new ThamGiaDao();
+
+            //string fileName = Path.GetFileNameWithoutExtension(bd.ImageFile.FileName);
+            //string extension = Path.GetExtension(bd.ImageFile.FileName);
+            //fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            //bd.AnhBia = "~/Image/" + fileName;
+            //fileName = Path.Combine(HttpContext.Current.Server.MapPath("~/Image/"), fileName);
+            //bd.ImageFile.SaveAs(fileName);
 
             Sach s = new Sach();
             s.TenSach = bd.TenSach;
@@ -109,21 +117,6 @@ namespace OnlineBookShop.DAO
             bool tacGiaMoi = false;
 
             var id = bd.ID;
-            //var bd_old = new BookDetails();
-
-            //var temp = sDao.listBook_byId(id);
-
-            //foreach(var item in temp)
-            //{
-            //    bd_old.TenSach = item.TenSach;
-            //    bd_old.GiaBan = item.GiaBan;
-            //    bd_old.AnhBia = item.AnhBia;
-            //    bd_old.SoLuongTon = item.SoLuongTon;
-            //    bd_old.HoTenTG = item.HoTenTG;
-            //    bd_old.TenCD = item.TenCD;
-            //    bd_old.TenNXB = item.TenNXB;
-            //}
-
             var s = db.Saches.Where(x => x.ID == id).FirstOrDefault();
 
             //Sach s = new Sach();
@@ -207,10 +200,16 @@ namespace OnlineBookShop.DAO
             }
         }
 
-        public IEnumerable<BookDetails> listAllPaging(int page, int pageSize)
+        public IEnumerable<BookDetails> listAllPaging(string searchString, int page, int pageSize)
         {
-            var res = db.Database.SqlQuery<BookDetails>("proc_sach_BookDetails").ToPagedList(page, pageSize);
-            return res;
+            var res = db.Database.SqlQuery<BookDetails>("proc_sach_BookDetails").ToList();
+            // t đưa các trường nào lên thì có cái class để lưu dữ liệu của các trường đấy.
+            // như ở đây là class BookDetails
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                res = res.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList();
+            }
+            return res.ToPagedList(page, pageSize);
         }
     }
 }

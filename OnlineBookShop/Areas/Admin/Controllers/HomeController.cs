@@ -8,31 +8,43 @@ using OnlineBookShop.Entities;
 using OnlineBookShop.DAO;
 using OnlineBookShop.Support_Class;
 using PagedList;
+using System.IO;
 
 namespace OnlineBookShop.Areas.Admin.Controllers
 {
     public class HomeController : Controller
     {
         // GET: Admin/Home
-        public ActionResult Index(int page = 1, int pageSize = 5)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 5)
         {
             SachDao dao = new SachDao();
             //var listBook = dao.listAllBook();
-            var listBook = dao.listAllPaging(page, pageSize);
+            var listBook = dao.listAllPaging(searchString, page, pageSize);
+            ViewBag.searchString = searchString;
             return View(listBook);
         }
+
+
 
 
         [HttpGet]
         public ActionResult Create()
         {
+
             return View();
         }
         [HttpPost]
         public ActionResult Create(BookDetails bd)
         {
+            string fileName = Path.GetFileNameWithoutExtension(bd.ImageFile.FileName);
+            string extension = Path.GetExtension(bd.ImageFile.FileName);
+            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            bd.AnhBia = "~/Image/" + fileName;
+            fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+            bd.ImageFile.SaveAs(fileName);
             SachDao dao = new SachDao();
             dao.insertSach(bd);
+            ModelState.Clear();
             return RedirectToAction("Index", "Home");
         }
 

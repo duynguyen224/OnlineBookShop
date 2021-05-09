@@ -15,64 +15,99 @@
         <h7>Bạn có chắc chắn muốn xóa?</h7>
         <div>
             <hr />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.TenSach)
-                </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.TenSach)
-                </dd>
+            @*this*@
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên sách</th>
+                        <th>Giá bán</th>
+                        <th>Ảnh bìa</th>
+                        <th>SL tồn</th>
+                        <th>Tên TG</th>
+                        <th>Tên CD</th>
+                        <th>Tên NXB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Html.DisplayFor(model => model.TenSach)</td>
+                        <td>@Html.DisplayFor(model => model.GiaBan)</td>
+                        <td>
+                            <img src="@Url.Content(Model.AnhBia)" alt="" style="height:120px; width:90px" />
+                        </td>
+                        <td>@Html.DisplayFor(model => model.SoLuongTon)</td>
+                        <td>@Html.DisplayFor(model => model.HoTenTG)</td>
+                        <td>@Html.DisplayFor(model => model.TenCD)</td>
+                        <td>@Html.DisplayFor(model => model.TenNXB)</td>
+                    </tr>
+                </tbody>
+            </table>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.GiaBan)
-                </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.GiaBan)
-                </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.AnhBia)
-                </dt>
+            @*and this*@
 
-                <dd>
-                    @Html.DisplayFor(model => model.AnhBia)
-                </dd>
+            <!--<dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenSach)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.SoLuongTon)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TenSach)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.SoLuongTon)
-                </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GiaBan)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.HoTenTG)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GiaBan)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.HoTenTG)
-                </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AnhBia)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.TenCD)
-                </dt>
+        <dd>-->
+            @*@Html.DisplayFor(model => model.AnhBia)*@
+            <!--<img src="@Url.Content(Model.AnhBia)" alt="" style="height:120px; width:90px" />
 
-                <dd>
-                    @Html.DisplayFor(model => model.TenCD)
-                </dd>
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.TenNXB)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.SoLuongTon)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.TenNXB)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.SoLuongTon)
+        </dd>
 
-            </dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.HoTenTG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoTenTG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TenCD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenCD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TenNXB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenNXB)
+        </dd>
+
+    </dl>-->
 
             @using (Html.BeginForm())
             {

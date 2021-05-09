@@ -15,6 +15,10 @@ namespace OnlineBookShop.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            if(Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập";
+            }
             return View();
         }
 
@@ -25,10 +29,13 @@ namespace OnlineBookShop.Controllers
             var res = dao.correctLogin(username, password);
             if (res > 0)
             {
-                return View("~/Areas/Admin/Views/Home/Index.cshtml");
+                Session["username"] = username;
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
+                //return RedirectToAction("Index", "Home");
             }
             else
             {
+                Session["loginError"] = "Sai tài khoản hoặc mật khẩu";
                 return RedirectToAction("Login", "User");
             }
         }

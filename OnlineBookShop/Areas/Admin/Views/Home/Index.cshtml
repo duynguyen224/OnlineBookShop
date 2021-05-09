@@ -14,9 +14,39 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <!--<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>-->
+
+                <!-- Topbar Search -->
+                <!--<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                </form>-->
+
+                @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                {
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small col-12" placeholder="Search for..."
+                               aria-label="Search" value="@ViewBag.searchString" aria-describedby="basic-addon2" name="searchString">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+
+                }
+
+
+                <!-- Topbar Navbar -->
+
+            </nav>
+
             <p>
                 @Html.ActionLink("Create New", "Create")
             </p>
+
 
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
@@ -36,7 +66,8 @@
                         <tr>
                             <td>@item.TenSach</td>
                             <td>@item.GiaBan</td>
-                            <td>@item.AnhBia</td>
+                            <td><img src="@Url.Content(@item.AnhBia)" alt="" style="height:80px; width:50px" /></td>
+                            @*<td><img src="@item.AnhBia" style="width:80px;height:50px "    /></td>*@
                             <td>@item.SoLuongTon</td>
                             <td>@item.HoTenTG</td>
                             <td>@item.TenCD</td>
@@ -51,8 +82,10 @@
                     }
                 </tbody>
             </table>
+
+
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.searchString }))
 
         </div>
     </div>
