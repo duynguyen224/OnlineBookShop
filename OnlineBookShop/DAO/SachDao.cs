@@ -54,6 +54,12 @@ namespace OnlineBookShop.DAO
             s.AnhBia = bd.AnhBia;
             s.SoLuongTon = bd.SoLuongTon;
 
+            if(s.AnhBia == null || s.AnhBia == "")
+            {
+                s.AnhBia = "~/Image/32f68a3b36b6c60f1d8bac9ba4af46fc.jpg";
+
+            }
+
             // kiểm tra ChuDe có hay chưa.
             // nếu có rồi thì thôi
             // nếu chưa có thì thêm mới chủ đề vào Db
@@ -124,6 +130,13 @@ namespace OnlineBookShop.DAO
             s.GiaBan = bd.GiaBan;
             s.AnhBia = bd.AnhBia;
             s.SoLuongTon = bd.SoLuongTon;
+
+            if (s.AnhBia == null || s.AnhBia == "")
+            {
+                s.AnhBia = "~/Image/32f68a3b36b6c60f1d8bac9ba4af46fc.jpg";
+
+            }
+
 
             // kiểm tra ChuDe có hay chưa.
             // nếu có rồi thì thôi

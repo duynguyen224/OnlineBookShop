@@ -1855,9 +1855,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Image\sinhvien210242233.jpg" />
-    <Content Include="Image\sinhvien214009478.jpg" />
-    <Content Include="Image\truoc214424589.jpg" />
+    <Content Include="Image\32f68a3b36b6c60f1d8bac9ba4af46fc.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />

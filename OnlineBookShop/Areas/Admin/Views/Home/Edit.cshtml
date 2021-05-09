@@ -13,7 +13,7 @@
     </div>
     <div class="card-body">
 
-        @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
+        @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { enctype = "multipart/form-data"}))
         {
             @Html.AntiForgeryToken()
 
@@ -44,7 +44,7 @@
                         @*@Html.TextBoxFor(model => model.AnhBia, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.AnhBia, "", new { @class = "text-danger" })*@
                         <img src="@Url.Content(Model.AnhBia)" alt="" style="height:120px; width:90px" />
-
+                        <input type="file" name="ImageFile" value="" />
                     </div>
                 </div>
 
