@@ -24,9 +24,6 @@ namespace OnlineBookShop.Areas.Admin.Controllers
             return View(listBook);
         }
 
-
-
-
         [HttpGet]
         public ActionResult Create()
         {
@@ -49,6 +46,47 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        public ActionResult Edit1(int id)
+        {
+            SachDao dao = new SachDao();
+            var list = dao.listAllBook();
+            var res = list.Where(x => x.ID == id).FirstOrDefault();
+            // như này là truyền cmn ID Sách vào rồi. Phải truyền id tác giả cơ
+            // coi như đây là id tác giả đi. Thì setViewBag chỗ này bị xử lý sai cmnr
+            setViewBag(id);
+            return View(res);
+        }
+
+        [HttpPost]
+        public ActionResult Edit1(BookDetails bd_new)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(bd_new.ImageFile.FileName);
+            string extension = Path.GetExtension(bd_new.ImageFile.FileName);
+            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            bd_new.AnhBia = "~/Image/" + fileName;
+            fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+            bd_new.ImageFile.SaveAs(fileName);
+
+            //ViewBag.ImageUrl = fileName;
+            //
+
+            SachDao dao = new SachDao();
+            dao.updateSach(bd_new);
+            ModelState.Clear();
+
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        public void setViewBag(int? selectedId = null)
+        {
+            TacGiaDao dao = new TacGiaDao();
+            ViewBag.HoTenTG = new SelectList(dao.listAll(), "ID", "HoTenTG", selectedId);
+            ChuDeDao cdDao = new ChuDeDao();
+            ViewBag.TenCD = new SelectList(cdDao.listAll(), "ID", "TenCD", selectedId);
+        }
+
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             SachDao dao = new SachDao();
@@ -60,15 +98,23 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         public ActionResult Edit(BookDetails bd_new)
         {
 
-            //
-            string fileName = Path.GetFileNameWithoutExtension(bd_new.ImageFile.FileName);
-            string extension = Path.GetExtension(bd_new.ImageFile.FileName);
-            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            bd_new.AnhBia = "~/Image/" + fileName;
-            fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
-            bd_new.ImageFile.SaveAs(fileName);
+            if (bd_new.ImageFile == null)
+            {
+                SachDao sdao = new SachDao();
+                bd_new.AnhBia = sdao.getPathImage_byId(bd_new.ID);
+            }
+            else
+            {
+                string fileName = Path.GetFileNameWithoutExtension(bd_new.ImageFile.FileName);
+                string extension = Path.GetExtension(bd_new.ImageFile.FileName);
+                fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                bd_new.AnhBia = "~/Image/" + fileName;
+                fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+                bd_new.ImageFile.SaveAs(fileName);
 
-            ViewBag.ImageUrl = fileName;
+            }
+
+            //ViewBag.ImageUrl = fileName;
             //
 
             SachDao dao = new SachDao();

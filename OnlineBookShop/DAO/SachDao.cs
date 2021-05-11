@@ -41,13 +41,6 @@ namespace OnlineBookShop.DAO
             TacGiaDao tgDao = new TacGiaDao();
             ThamGiaDao thamgiaDao = new ThamGiaDao();
 
-            //string fileName = Path.GetFileNameWithoutExtension(bd.ImageFile.FileName);
-            //string extension = Path.GetExtension(bd.ImageFile.FileName);
-            //fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            //bd.AnhBia = "~/Image/" + fileName;
-            //fileName = Path.Combine(HttpContext.Current.Server.MapPath("~/Image/"), fileName);
-            //bd.ImageFile.SaveAs(fileName);
-
             Sach s = new Sach();
             s.TenSach = bd.TenSach;
             s.GiaBan = bd.GiaBan;
@@ -67,7 +60,6 @@ namespace OnlineBookShop.DAO
             {
                 cdDao.insertChuDe(bd.TenCD);
                 s.MaCD = cdDao.getIdChuDe_byName(bd.TenCD);
-
             }
             else
             {
@@ -138,14 +130,13 @@ namespace OnlineBookShop.DAO
             }
 
 
-            // kiểm tra ChuDe có hay chưa.
+            //kiểm tra ChuDe có hay chưa.
             // nếu có rồi thì thôi
             // nếu chưa có thì thêm mới chủ đề vào Db
             if (cdDao.getIdChuDe_byName(bd.TenCD) == 0)
             {
                 cdDao.insertChuDe(bd.TenCD);
                 s.MaCD = cdDao.getIdChuDe_byName(bd.TenCD);
-
             }
             else
             {
@@ -157,15 +148,12 @@ namespace OnlineBookShop.DAO
             {
                 nxbDao.insertNhaXuatBan(bd.TenNXB);
                 s.MaNXB = nxbDao.getIdNXB_byName(bd.TenNXB);
-
             }
             else
             {
                 s.MaNXB = nxbDao.getIdNXB_byName(bd.TenNXB);
             }
 
-            // insert sach
-            //db.Saches.Add(s);
 
             // kiểm tra TacGia
             if (tgDao.getIdTacGia_byName(bd.HoTenTG) == 0)
@@ -179,7 +167,7 @@ namespace OnlineBookShop.DAO
             }
             s.NgayCapNhat = DateTime.Now;
 
-            //db.Saches.Add(s);
+
             db.SaveChanges();
 
 
@@ -223,6 +211,12 @@ namespace OnlineBookShop.DAO
                 res = res.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList();
             }
             return res.ToPagedList(page, pageSize);
+        }
+
+        public string getPathImage_byId(int id)
+        {
+            var res = db.Saches.Where(x => x.ID == id).FirstOrDefault();
+            return res.AnhBia;
         }
     }
 }

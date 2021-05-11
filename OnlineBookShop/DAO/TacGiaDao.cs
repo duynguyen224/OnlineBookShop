@@ -42,5 +42,10 @@ namespace OnlineBookShop.DAO
                 return res.ID;
             }
         }
+
+        public List<TacGia> listAll()
+        {
+            return db.TacGias.ToList();
+        }
     }
 }
