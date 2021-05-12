@@ -42,5 +42,9 @@ namespace OnlineBookShop.DAO
             }
         }
 
+        public List<NhaXuatBan> listAll()
+        {
+            return db.NhaXuatBans.ToList();
+        }
     }
 }

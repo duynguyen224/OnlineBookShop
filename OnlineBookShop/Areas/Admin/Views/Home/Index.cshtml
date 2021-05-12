@@ -27,14 +27,14 @@
 
                 @using (Html.BeginForm("Index", "Home", FormMethod.Get))
                 {
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small col-12" placeholder="Search for..."
-                               aria-label="Search" value="@ViewBag.searchString" aria-describedby="basic-addon2" name="searchString">
-
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Search</button>
-                        </div>
+                <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small col-12" placeholder="Search for..."
+                           aria-label="Search" value="@ViewBag.searchString" aria-describedby="basic-addon2" name="searchString">
+                    
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Search</button>
                     </div>
+                </div>
 
                 }
 

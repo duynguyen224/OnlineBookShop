@@ -15,7 +15,7 @@ namespace OnlineBookShop.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         // GET: Admin/Home
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 5)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             SachDao dao = new SachDao();
             //var listBook = dao.listAllBook();
@@ -27,7 +27,7 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-
+            setViewBag();
             return View();
         }
         [HttpPost]
@@ -80,10 +80,21 @@ namespace OnlineBookShop.Areas.Admin.Controllers
 
         public void setViewBag(int? selectedId = null)
         {
+            //TacGiaDao dao = new TacGiaDao();
+            //ViewBag.HoTenTG = new SelectList(dao.listAll(), "ID", "HoTenTG", selectedId);
+            //ChuDeDao cdDao = new ChuDeDao();
+            //ViewBag.TenCD = new SelectList(cdDao.listAll(), "ID", "TenCD", selectedId);
+            //NhaXuatBanDao nxbDao = new NhaXuatBanDao();
+            //ViewBag.TenNXB = new SelectList(nxbDao.listAll(), "ID", "TenNXB", selectedId);
+
+            //
             TacGiaDao dao = new TacGiaDao();
-            ViewBag.HoTenTG = new SelectList(dao.listAll(), "ID", "HoTenTG", selectedId);
+            ViewBag.HoTenTG = new SelectList(dao.listAll(), "HoTenTG", "HoTenTG", selectedId);
             ChuDeDao cdDao = new ChuDeDao();
-            ViewBag.TenCD = new SelectList(cdDao.listAll(), "ID", "TenCD", selectedId);
+            ViewBag.TenCD = new SelectList(cdDao.listAll(), "TenCD", "TenCD", selectedId);
+            NhaXuatBanDao nxbDao = new NhaXuatBanDao();
+            ViewBag.TenNXB = new SelectList(nxbDao.listAll(), "TenNXB", "TenNXB", selectedId);
+            //
         }
 
         [HttpGet]
@@ -92,6 +103,7 @@ namespace OnlineBookShop.Areas.Admin.Controllers
             SachDao dao = new SachDao();
             var list = dao.listAllBook();
             var res = list.Where(x => x.ID == id).FirstOrDefault();
+            setViewBag(id);
             return View(res);
         }
         [HttpPost]
@@ -111,11 +123,7 @@ namespace OnlineBookShop.Areas.Admin.Controllers
                 bd_new.AnhBia = "~/Image/" + fileName;
                 fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
                 bd_new.ImageFile.SaveAs(fileName);
-
             }
-
-            //ViewBag.ImageUrl = fileName;
-            //
 
             SachDao dao = new SachDao();
             dao.updateSach(bd_new);

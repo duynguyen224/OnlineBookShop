@@ -143,6 +143,9 @@ namespace OnlineBookShop.DAO
                 s.MaCD = cdDao.getIdChuDe_byName(bd.TenCD);
             }
 
+            #region
+            #endregion
+
             // kiểm tra NhaXuatBan
             if (nxbDao.getIdNXB_byName(bd.TenNXB) == 0)
             {

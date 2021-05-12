@@ -42,8 +42,8 @@ namespace OnlineBookShop.DAO
 
         public List<ChuDe> listAll()
         {
-            var res = db.ChuDes.Where(x => x.ID > 0);
-            return res.ToList();
+
+            return db.ChuDes.ToList();
         }
 
     }
