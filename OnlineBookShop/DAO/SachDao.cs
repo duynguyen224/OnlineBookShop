@@ -21,7 +21,7 @@ namespace OnlineBookShop.DAO
 
         public List<BookDetails> listAllBook()
         {
-            var res = db.Database.SqlQuery<BookDetails>("proc_sach_BookDetails").ToList(); ;
+            var res = db.Database.SqlQuery<BookDetails>("proc_sach_BookDetails").ToList(); 
             return res;
         }
 
@@ -204,15 +204,41 @@ namespace OnlineBookShop.DAO
             }
         }
 
-        public IEnumerable<BookDetails> listAllPaging(string searchString, int page, int pageSize)
+        public IEnumerable<BookDetails> listAllPaging(string searchString, string searchField, int giaMin, int giaMax, int page, int pageSize)
         {
             var res = db.Database.SqlQuery<BookDetails>("proc_sach_BookDetails").ToList();
-            // t đưa các trường nào lên thì có cái class để lưu dữ liệu của các trường đấy.
-            // như ở đây là class BookDetails
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString) && searchField == "TenSach" || string.IsNullOrEmpty(searchString) && searchField == "TenSach")
             {
                 res = res.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList();
             }
+            else if (!string.IsNullOrEmpty(searchString) && searchField == "TenTG" || string.IsNullOrEmpty(searchString) && searchField == "TenTG")
+            {
+                res = res.Where(x => x.HoTenTG.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList();
+            }
+            else if (!string.IsNullOrEmpty(searchString) && searchField == "TenNXB" || string.IsNullOrEmpty(searchString) && searchField == "TenNXB")
+            {
+                res = res.Where(x => x.TenNXB.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList();
+            }
+            else if (!string.IsNullOrEmpty(searchString) && searchField == "TenNXB" || string.IsNullOrEmpty(searchString) && searchField == "TenNXB")
+            {
+                res = res.Where(x => x.TenCD.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList();
+            }
+            else if (!string.IsNullOrEmpty(searchString) && searchField == "GiaGiam" || string.IsNullOrEmpty(searchString) && searchField == "GiaGiam")
+            {
+                res = res.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).OrderByDescending(x=> x.GiaBan).ToList();
+            }
+            else if (!string.IsNullOrEmpty(searchString) && searchField == "GiaTang" || string.IsNullOrEmpty(searchString) && searchField == "GiaTang")
+            {
+                res = res.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).OrderBy(x=>x.GiaBan).ToList();
+            }
+            if (giaMin > 0 && giaMax > giaMin)
+            {
+                res = res.Where(x => x.GiaBan >= giaMin && x.GiaBan <= giaMax).OrderBy(x => x.GiaBan).ToList();
+
+            }
+
+
+
             return res.ToPagedList(page, pageSize);
         }
 

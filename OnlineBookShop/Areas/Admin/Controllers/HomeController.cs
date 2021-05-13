@@ -15,14 +15,47 @@ namespace OnlineBookShop.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         // GET: Admin/Home
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
+        public ActionResult Index(string searchString, string searchField, int giaMin = 0 , int giaMax = 0 , int page = 1, int pageSize = 5)
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
+
+            List<SearchField> list = new List<SearchField>()
+            {
+                new SearchField(){Name = "TenSach", Value = "Tên sách"},
+                new SearchField(){Name = "TenTG", Value = "Tên tác giả"},
+                new SearchField(){Name = "TenNXB", Value = "Tên nhà xuất bản"},
+                new SearchField(){Name = "TenCD", Value = "Tên chủ đề"},
+                new SearchField(){Name = "GiaGiam", Value = "Giá giảm dần"},
+                new SearchField(){Name = "GiaTang", Value = "Giá tăng dần"}
+
+            };
+
             SachDao dao = new SachDao();
             //var listBook = dao.listAllBook();
-            var listBook = dao.listAllPaging(searchString, page, pageSize);
+            var listBook = dao.listAllPaging(searchString, searchField, giaMin, giaMax, page, pageSize);
+
             ViewBag.searchString = searchString;
+            ViewBag.searchField = new SelectList(list, "Name", "Value");
+            ViewBag._searchField = searchField;
+            if (giaMin == 0 && giaMax == 0)
+            {
+                ViewBag.giaMin = null;
+                ViewBag.giaMax = null;
+
+            }
+            else
+            {
+                ViewBag.giaMin = giaMin;
+                ViewBag.giaMax = giaMax;
+
+            }
             return View(listBook);
         }
+
 
         [HttpGet]
         public ActionResult Create()
@@ -45,38 +78,6 @@ namespace OnlineBookShop.Areas.Admin.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
-        public ActionResult Edit1(int id)
-        {
-            SachDao dao = new SachDao();
-            var list = dao.listAllBook();
-            var res = list.Where(x => x.ID == id).FirstOrDefault();
-            // như này là truyền cmn ID Sách vào rồi. Phải truyền id tác giả cơ
-            // coi như đây là id tác giả đi. Thì setViewBag chỗ này bị xử lý sai cmnr
-            setViewBag(id);
-            return View(res);
-        }
-
-        [HttpPost]
-        public ActionResult Edit1(BookDetails bd_new)
-        {
-            string fileName = Path.GetFileNameWithoutExtension(bd_new.ImageFile.FileName);
-            string extension = Path.GetExtension(bd_new.ImageFile.FileName);
-            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            bd_new.AnhBia = "~/Image/" + fileName;
-            fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
-            bd_new.ImageFile.SaveAs(fileName);
-
-            //ViewBag.ImageUrl = fileName;
-            //
-
-            SachDao dao = new SachDao();
-            dao.updateSach(bd_new);
-            ModelState.Clear();
-
-            return RedirectToAction("Index", "Home");
-
-        }
 
         public void setViewBag(int? selectedId = null)
         {

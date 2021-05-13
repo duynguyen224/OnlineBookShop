@@ -20,21 +20,25 @@
                 <!--<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars"></i>
                 </button>-->
-
                 <!-- Topbar Search -->
                 <!--<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 </form>-->
 
                 @using (Html.BeginForm("Index", "Home", FormMethod.Get))
                 {
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small col-12" placeholder="Search for..."
-                           aria-label="Search" value="@ViewBag.searchString" aria-describedby="basic-addon2" name="searchString">
-                    
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Search</button>
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small col-12" placeholder="Search for..."
+                               aria-label="Search" value="@ViewBag.searchString" aria-describedby="basic-addon2" name="searchString">
+                        @Html.DropDownList("searchField", ViewBag.searchField as SelectList, new { @class = "form-control" })
+                        <input type="number" class="form-control bg-light border-0 small col-12" placeholder="Giá từ ..."
+                               aria-label="Search" value="@ViewBag.giaMin" aria-describedby="basic-addon2" name="giaMin">
+                        <input type="number" class="form-control bg-light border-0 small col-12" placeholder="Đến "
+                               aria-label="Search" value="@ViewBag.giaMax" aria-describedby="basic-addon2" name="giaMax">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
                     </div>
-                </div>
 
                 }
 
@@ -83,9 +87,26 @@
                 </tbody>
             </table>
 
+            @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            <div class="col-sm-12 col-md-7">
+                @Html.PagedListPager(Model,
+    page => Url.Action("Index", new { page, @searchString = @ViewBag.searchString, @searchField = @ViewBag._searchField, @giaMin = ViewBag.giaMin, @giaMax = ViewBag.giaMax }),
+    new PagedListRenderOptions()
+    {
+        UlElementClasses = new List<string> { "pagination" },
+        LiElementClasses = new List<string> { "paginate_button page-item " },
+        ContainerDivClasses = new List<string> { "dataTables_paginate paging_simple_numbers" }
+    })
+
+            </div>*@
+
+
+
 
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.searchString }))
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.searchString, @searchField = @ViewBag._searchField, @giaMin = ViewBag.giaMin, @giaMax = ViewBag.giaMax }))
+
+
 
         </div>
     </div>

@@ -17,7 +17,7 @@ namespace OnlineBookShop.Controllers
         {
             if(Session["username"] == null)
             {
-                Session["thongbao"] = "Cần đăng nhập";
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
             }
             return View();
         }

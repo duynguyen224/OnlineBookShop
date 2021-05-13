@@ -161,6 +161,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support Class\BookDetails.cs" />
+    <Compile Include="Support Class\SearchField.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Admin\css\sb-admin-2.css" />
@@ -2037,7 +2038,6 @@
     <Content Include="Areas\Admin\Views\Home\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Edit1.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
