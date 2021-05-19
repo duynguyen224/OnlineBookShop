@@ -1,0 +1,46 @@
+﻿
+@model OnlineBookShop.Entities.TacGia
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Thông tin chi tiết</h6>
+    </div>
+    <div class="card-body">
+
+        @*this*@
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Tên tác giả</th>
+                    <th>Địa chỉ</th>
+                    <th>Tiểu sử</th>
+                    <th>Điện thoại</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(model => model.HoTenTG)</td>
+                    <td>@Html.DisplayFor(model => model.DiaChi)</td>
+                    <td>@Html.DisplayFor(model => model.TieuSu)</td>
+                    <td>@Html.DisplayFor(model => model.DienThoai)</td>
+
+                </tr>
+            </tbody>
+        </table>
+
+
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+
+
+</div>
+

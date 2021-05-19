@@ -1,6 +1,6 @@
 ﻿@*@model IEnumerable<OnlineBookShop.Support_Class.BookDetails>*@
 
-@model PagedList.IPagedList<OnlineBookShop.Support_Class.BookDetails>
+@model PagedList.IPagedList<OnlineBookShop.Entities.ChuDe>
 @using PagedList.Mvc
 @using PagedList
 @{
@@ -67,25 +67,12 @@
         <div class="table-responsive">
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                <!-- Sidebar Toggle (Topbar) -->
-                <!--<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>-->
-                <!-- Topbar Search -->
-                <!--<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                </form>-->
 
-                @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                @using (Html.BeginForm("Index", "Category", FormMethod.Get))
                 {
                     <div class="input-group">
                         <input type="text" class="form-control bg-light border-0 small col-12" placeholder="Nhập từ khóa ..."
                                aria-label="Search" value="@ViewBag.searchString" aria-describedby="basic-addon2" name="searchString">
-                        @Html.DropDownList("searchField", ViewBag.searchField as SelectList, new { @class = "form-control" })
-                        <input type="number" class="form-control bg-light border-0 small col-12" placeholder="Giá từ ..."
-                               aria-label="Search" value="@ViewBag.giaMin" aria-describedby="basic-addon2" name="giaMin">
-                        <input type="number" class="form-control bg-light border-0 small col-12" placeholder="Đến "
-                               aria-label="Search" value="@ViewBag.giaMax" aria-describedby="basic-addon2" name="giaMax">
-
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Tìm kiếm</button>
                         </div>
@@ -99,34 +86,21 @@
             </nav>
 
             <p>
-                @Html.ActionLink("Thêm sách mới", "Create")
+                @Html.ActionLink("Thêm chủ đề", "Create")
             </p>
 
 
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Tên sách</th>
-                        <th>Giá bán</th>
-                        <th>Ảnh bìa</th>
-                        <th>SL tồn</th>
-                        <th>Tên TG</th>
-                        <th>Tên CD</th>
-                        <th>Tên NXB</th>
+                        <th>Tên chủ đề</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@item.TenSach</td>
-                            <td>@item.GiaBan</td>
-                            <td><img src="@Url.Content(@item.AnhBia)" alt="" style="height:80px; width:50px" /></td>
-                            @*<td><img src="@item.AnhBia" style="width:80px;height:50px "    /></td>*@
-                            <td>@item.SoLuongTon</td>
-                            <td>@item.HoTenTG</td>
                             <td>@item.TenCD</td>
-                            <td>@item.TenNXB</td>
                             <td>
                                 @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
                                 @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }) |
@@ -138,22 +112,10 @@
                 </tbody>
             </table>
 
-            @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-                        <div class="col-sm-12 col-md-7">
-                            @Html.PagedListPager(Model,
-                page => Url.Action("Index", new { page, @searchString = @ViewBag.searchString, @searchField = @ViewBag._searchField, @giaMin = ViewBag.giaMin, @giaMax = ViewBag.giaMax }),
-                new PagedListRenderOptions()
-                {
-                    UlElementClasses = new List<string> { "pagination" },
-                    LiElementClasses = new List<string> { "paginate_button page-item " },
-                    ContainerDivClasses = new List<string> { "dataTables_paginate paging_simple_numbers" }
-                })
-
-                        </div>*@
 
 
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.searchString, @searchField = @ViewBag._searchField, @giaMin = ViewBag.giaMin, @giaMax = ViewBag.giaMax }))
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.searchString }))
 
 
 

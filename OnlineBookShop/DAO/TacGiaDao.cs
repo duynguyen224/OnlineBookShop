@@ -7,7 +7,8 @@ using System.Web;
 using OnlineBookShop.Entities;
 using System.Data.SqlClient;
 using OnlineBookShop.Support_Class;
-
+using PagedList;
+using System.IO;
 
 namespace OnlineBookShop.DAO
 {
@@ -19,15 +20,47 @@ namespace OnlineBookShop.DAO
             db = new OnlineBookShopDbContext();
         }
 
-        public void insertTacGia(string hoten, string diachi = null, string tieusu = null, string dienthoai = null)
+        public IEnumerable<TacGia> listAll(string searchString, int page, int pageSize)
         {
-            TacGia tg = new TacGia();
-            tg.HoTenTG = hoten;
-            tg.DiaChi = diachi;
-            tg.TieuSu = tieusu;
-            tg.DienThoai = dienthoai;
-            db.TacGias.Add(tg);
-            db.SaveChanges();
+            var res = db.TacGias.ToList();
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                res = res.Where(x => x.HoTenTG.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList();
+            }
+            return res.ToPagedList(page, pageSize);
+        }
+
+        public void insertTacGia(TacGia tacgia)
+        {
+            if(tacgia != null)
+            {
+                db.TacGias.Add(tacgia);
+                db.SaveChanges();
+            }
+        }
+        public void deleteTacGia(TacGia tacgia)
+        {
+            int id = tacgia.ID;
+            var record = db.TacGias.Where(x => x.ID == id).FirstOrDefault();
+            if(record != null)
+            {
+                db.TacGias.Remove(record);
+                db.SaveChanges();
+            }
+        }
+
+        public void updateTacGia(TacGia tacgia)
+        {
+            int id = tacgia.ID;
+            var record = db.TacGias.Where(x => x.ID == id).FirstOrDefault();
+            if(record != null)
+            {
+                record.HoTenTG = tacgia.HoTenTG;
+                record.DiaChi = tacgia.DiaChi;
+                record.TieuSu = tacgia.TieuSu;
+                record.DienThoai = tacgia.DienThoai;
+                db.SaveChanges();
+            }
         }
 
         public int getIdTacGia_byName(string name)

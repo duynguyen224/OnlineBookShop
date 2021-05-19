@@ -1,7 +1,8 @@
-namespace OnlineBookShop.Entities
+﻿namespace OnlineBookShop.Entities
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -18,6 +19,7 @@ namespace OnlineBookShop.Entities
         public int ID { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Tên chủ đề")]
         public string TenCD { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

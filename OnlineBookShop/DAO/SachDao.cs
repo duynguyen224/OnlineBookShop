@@ -21,7 +21,7 @@ namespace OnlineBookShop.DAO
 
         public List<BookDetails> listAllBook()
         {
-            var res = db.Database.SqlQuery<BookDetails>("proc_sach_BookDetails").ToList(); 
+            var res = db.Database.SqlQuery<BookDetails>("proc_sach_BookDetails").ToList();
             return res;
         }
 
@@ -47,50 +47,23 @@ namespace OnlineBookShop.DAO
             s.AnhBia = bd.AnhBia;
             s.SoLuongTon = bd.SoLuongTon;
 
-            if(s.AnhBia == null || s.AnhBia == "")
+            if (s.AnhBia == null || s.AnhBia == "")
             {
                 s.AnhBia = "~/Image/32f68a3b36b6c60f1d8bac9ba4af46fc.jpg";
 
             }
 
-            // kiểm tra ChuDe có hay chưa.
-            // nếu có rồi thì thôi
-            // nếu chưa có thì thêm mới chủ đề vào Db
-            if (cdDao.getIdChuDe_byName(bd.TenCD) == 0)
-            {
-                cdDao.insertChuDe(bd.TenCD);
-                s.MaCD = cdDao.getIdChuDe_byName(bd.TenCD);
-            }
-            else
-            {
-                s.MaCD = cdDao.getIdChuDe_byName(bd.TenCD);
-            }
+            s.MaCD = cdDao.getIdChuDe_byName(bd.TenCD);
 
-            // kiểm tra NhaXuatBan
-            if (nxbDao.getIdNXB_byName(bd.TenNXB) == 0)
-            {
-                nxbDao.insertNhaXuatBan(bd.TenNXB);
-                s.MaNXB = nxbDao.getIdNXB_byName(bd.TenNXB);
 
-            }
-            else
-            {
-                s.MaNXB = nxbDao.getIdNXB_byName(bd.TenNXB);
-            }
+
+            s.MaNXB = nxbDao.getIdNXB_byName(bd.TenNXB);
+
 
             // insert sach
             db.Saches.Add(s);
 
-            // kiểm tra TacGia
-            if (tgDao.getIdTacGia_byName(bd.HoTenTG) == 0)
-            {
-                tgDao.insertTacGia(bd.HoTenTG);
 
-            }
-            else
-            {
-
-            }
             s.NgayCapNhat = DateTime.Now;
 
             db.Saches.Add(s);
@@ -130,44 +103,18 @@ namespace OnlineBookShop.DAO
             }
 
 
-            //kiểm tra ChuDe có hay chưa.
-            // nếu có rồi thì thôi
-            // nếu chưa có thì thêm mới chủ đề vào Db
-            if (cdDao.getIdChuDe_byName(bd.TenCD) == 0)
-            {
-                cdDao.insertChuDe(bd.TenCD);
                 s.MaCD = cdDao.getIdChuDe_byName(bd.TenCD);
-            }
-            else
-            {
-                s.MaCD = cdDao.getIdChuDe_byName(bd.TenCD);
-            }
 
             #region
             #endregion
 
             // kiểm tra NhaXuatBan
-            if (nxbDao.getIdNXB_byName(bd.TenNXB) == 0)
-            {
-                nxbDao.insertNhaXuatBan(bd.TenNXB);
                 s.MaNXB = nxbDao.getIdNXB_byName(bd.TenNXB);
-            }
-            else
-            {
-                s.MaNXB = nxbDao.getIdNXB_byName(bd.TenNXB);
-            }
+
 
 
             // kiểm tra TacGia
-            if (tgDao.getIdTacGia_byName(bd.HoTenTG) == 0)
-            {
-                tgDao.insertTacGia(bd.HoTenTG);
-                tacGiaMoi = true;
-            }
-            else
-            {
 
-            }
             s.NgayCapNhat = DateTime.Now;
 
 
@@ -175,7 +122,7 @@ namespace OnlineBookShop.DAO
 
 
             // insert ThamGia
-            if(tacGiaMoi == true)
+            if (tacGiaMoi == true)
             {
                 int masach = getIdSach_byName(bd.TenSach);
                 int matacgia = tgDao.getIdTacGia_byName(bd.HoTenTG);
@@ -194,7 +141,7 @@ namespace OnlineBookShop.DAO
         public int getIdSach_byName(string name)
         {
             var res = db.Saches.ToList().Find(x => x.TenSach == name);
-            if(res == null)
+            if (res == null)
             {
                 return 0;
             }
@@ -225,18 +172,27 @@ namespace OnlineBookShop.DAO
             }
             else if (!string.IsNullOrEmpty(searchString) && searchField == "GiaGiam" || string.IsNullOrEmpty(searchString) && searchField == "GiaGiam")
             {
-                res = res.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).OrderByDescending(x=> x.GiaBan).ToList();
+                res = res.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).OrderByDescending(x => x.GiaBan).ToList();
             }
             else if (!string.IsNullOrEmpty(searchString) && searchField == "GiaTang" || string.IsNullOrEmpty(searchString) && searchField == "GiaTang")
             {
-                res = res.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).OrderBy(x=>x.GiaBan).ToList();
+                res = res.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).OrderBy(x => x.GiaBan).ToList();
             }
-            if (giaMin > 0 && giaMax > giaMin)
+
+            if (giaMin > 0 && giaMax >= giaMin)
             {
                 res = res.Where(x => x.GiaBan >= giaMin && x.GiaBan <= giaMax).OrderBy(x => x.GiaBan).ToList();
 
             }
+            else if (giaMin >= 0 && giaMax == 0)
+            {
+                res = res.Where(x => x.GiaBan >= giaMin).OrderBy(x => x.GiaBan).ToList();
+            }
+            else if (giaMax >= 0 && giaMin == 0)
+            {
+                res = res.Where(x => x.GiaBan <= giaMax).OrderBy(x => x.GiaBan).ToList();
 
+            }
 
 
             return res.ToPagedList(page, pageSize);

@@ -15,13 +15,14 @@ namespace OnlineBookShop.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         // GET: Admin/Home
-        public ActionResult Index(string searchString, string searchField, int giaMin = 0 , int giaMax = 0 , int page = 1, int pageSize = 5)
+        public ActionResult Index(string searchString = "", string searchField = "", int giaMin = 0 , int giaMax = 0 , int page = 1, int pageSize = 5)
         {
-            if (Session["username"] == null)
-            {
-                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
-                return RedirectToAction("Login", "User", new { area = "" });
-            }
+
+            //if (Session["username"] == null)
+            //{
+            //    Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+            //    return RedirectToAction("Login", "User", new { area = "" });
+            //}
 
             List<SearchField> list = new List<SearchField>()
             {
@@ -31,11 +32,9 @@ namespace OnlineBookShop.Areas.Admin.Controllers
                 new SearchField(){Name = "TenCD", Value = "Tên chủ đề"},
                 new SearchField(){Name = "GiaGiam", Value = "Giá giảm dần"},
                 new SearchField(){Name = "GiaTang", Value = "Giá tăng dần"}
-
             };
 
             SachDao dao = new SachDao();
-            //var listBook = dao.listAllBook();
             var listBook = dao.listAllPaging(searchString, searchField, giaMin, giaMax, page, pageSize);
 
             ViewBag.searchString = searchString;
