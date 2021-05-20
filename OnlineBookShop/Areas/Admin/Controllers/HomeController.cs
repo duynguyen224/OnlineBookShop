@@ -15,7 +15,7 @@ namespace OnlineBookShop.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         // GET: Admin/Home
-        public ActionResult Index(string searchString = "", string searchField = "", int giaMin = 0 , int giaMax = 0 , int page = 1, int pageSize = 5)
+        public ActionResult Index(string searchString = "", string searchField = "", int giaMin = 0, int giaMax = 0, int page = 1, int pageSize = 5)
         {
 
             //if (Session["username"] == null)
@@ -65,16 +65,29 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(BookDetails bd)
         {
-            string fileName = Path.GetFileNameWithoutExtension(bd.ImageFile.FileName);
-            string extension = Path.GetExtension(bd.ImageFile.FileName);
-            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            bd.AnhBia = "~/Image/" + fileName;
-            fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
-            bd.ImageFile.SaveAs(fileName);
-            SachDao dao = new SachDao();
-            dao.insertSach(bd);
-            ModelState.Clear();
-            return RedirectToAction("Index", "Home");
+            setViewBag();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    bd.AnhBia = "";
+                    string fileName = Path.GetFileNameWithoutExtension(bd.ImageFile.FileName);
+                    string extension = Path.GetExtension(bd.ImageFile.FileName);
+                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    bd.AnhBia = "~/Image/" + fileName;
+                    fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+                    bd.ImageFile.SaveAs(fileName);
+                    SachDao dao = new SachDao();
+                    dao.insertSach(bd);
+                    ModelState.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
         }
 
 
@@ -106,16 +119,17 @@ namespace OnlineBookShop.Areas.Admin.Controllers
             setViewBag(id);
             return View(res);
         }
+
         [HttpPost]
         public ActionResult Edit(BookDetails bd_new)
         {
-
-            if (bd_new.ImageFile == null)
+            setViewBag(bd_new.ID);
+            if (bd_new.ImageFile == null) // luoon luoon null. neu null thi vao db lay cai duong dan ra
             {
                 SachDao sdao = new SachDao();
                 bd_new.AnhBia = sdao.getPathImage_byId(bd_new.ID);
             }
-            else
+            else // neu co thay doi thi nhu create
             {
                 string fileName = Path.GetFileNameWithoutExtension(bd_new.ImageFile.FileName);
                 string extension = Path.GetExtension(bd_new.ImageFile.FileName);
@@ -125,11 +139,25 @@ namespace OnlineBookShop.Areas.Admin.Controllers
                 bd_new.ImageFile.SaveAs(fileName);
             }
 
-            SachDao dao = new SachDao();
-            dao.updateSach(bd_new);
-            ModelState.Clear();
+            try // xong rui moi update
+            {
+                if (ModelState.IsValid)
+                {
 
-            return RedirectToAction("Index", "Home");
+                    SachDao dao = new SachDao();
+                    dao.updateSach(bd_new);
+                    ModelState.Clear();
+                    return RedirectToAction("Index", "Home");
+
+                }
+                return View(bd_new);
+            }
+            catch
+            {
+                return View(bd_new);
+
+
+            }
         }
 
         [HttpGet]

@@ -20,14 +20,15 @@
 
         [StringLength(50)]
         [DisplayName("Họ tên tác giả")]
+        [Required(ErrorMessage ="Hãy nhập tên tác giả")]
         public string HoTenTG { get; set; }
 
-        [StringLength(50)]
+        [StringLength(200)]
         [DisplayName("Địa chỉ")]
 
         public string DiaChi { get; set; }
 
-        [StringLength(50)]
+        [StringLength(200)]
         [DisplayName("Tiểu sử")]
 
         public string TieuSu { get; set; }

@@ -30,9 +30,14 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(ChuDe cd)
         {
-            ChuDeDao dao = new ChuDeDao();
-            dao.insertChuDe(cd);
-            return RedirectToAction("Index", "Category");
+            if (ModelState.IsValid)
+            {
+                ChuDeDao dao = new ChuDeDao();
+                dao.insertChuDe(cd);
+                return RedirectToAction("Index", "Category");
+
+            }
+            return View();
         }
 
         [HttpGet]
@@ -46,9 +51,14 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(ChuDe chude)
         {
-            ChuDeDao dao = new ChuDeDao();
-            dao.updateChuDe(chude);
-            return RedirectToAction("Index", "Category");
+            if (ModelState.IsValid)
+            {
+                ChuDeDao dao = new ChuDeDao();
+                dao.updateChuDe(chude);
+                return RedirectToAction("Index", "Category");
+
+            }
+            return View(chude);
         }
 
         [HttpGet]

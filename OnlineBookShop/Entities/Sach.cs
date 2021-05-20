@@ -1,4 +1,4 @@
-namespace OnlineBookShop.Entities
+﻿namespace OnlineBookShop.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -20,6 +20,7 @@ namespace OnlineBookShop.Entities
         public int ID { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage ="Tên sách không được thiếu")]
         public string TenSach { get; set; }
 
         public int? GiaBan { get; set; }
@@ -27,11 +28,12 @@ namespace OnlineBookShop.Entities
         [StringLength(50)]
         public string MoTa { get; set; }
 
-        [StringLength(50)]
+        [StringLength(200)]
         public string AnhBia { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? NgayCapNhat { get; set; }
+
 
         public int? SoLuongTon { get; set; }
 

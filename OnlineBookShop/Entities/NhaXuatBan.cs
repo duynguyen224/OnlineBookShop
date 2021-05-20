@@ -20,6 +20,7 @@
 
         [StringLength(50)]
         [DisplayName("Tên nhà xuất bản")]
+        [Required(ErrorMessage = "Hãy nhập tên nhà xuất bản")]
         public string TenNXB { get; set; }
 
         [StringLength(50)]

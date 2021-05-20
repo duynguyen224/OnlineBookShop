@@ -30,9 +30,13 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(NhaXuatBan nxb)
         {
-            NhaXuatBanDao dao = new NhaXuatBanDao();
-            dao.insertNhaXuatBan(nxb);
-            return RedirectToAction("Index", "Publisher");
+            if (ModelState.IsValid)
+            {
+                NhaXuatBanDao dao = new NhaXuatBanDao();
+                dao.insertNhaXuatBan(nxb);
+                return RedirectToAction("Index", "Publisher");
+            }
+            return View();
         }
 
         [HttpGet]
@@ -46,9 +50,14 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(NhaXuatBan _nxb)
         {
-            NhaXuatBanDao dao = new NhaXuatBanDao();
-            dao.updateNXB(_nxb);
-            return RedirectToAction("Index", "Publisher");
+            if (ModelState.IsValid)
+            {
+                NhaXuatBanDao dao = new NhaXuatBanDao();
+                dao.updateNXB(_nxb);
+                return RedirectToAction("Index", "Publisher");
+
+            }
+            return View(_nxb);
         }
 
         [HttpGet]

@@ -103,13 +103,13 @@ namespace OnlineBookShop.DAO
             }
 
 
-                s.MaCD = cdDao.getIdChuDe_byName(bd.TenCD);
+            s.MaCD = cdDao.getIdChuDe_byName(bd.TenCD);
 
             #region
             #endregion
 
             // kiểm tra NhaXuatBan
-                s.MaNXB = nxbDao.getIdNXB_byName(bd.TenNXB);
+            s.MaNXB = nxbDao.getIdNXB_byName(bd.TenNXB);
 
 
 
@@ -179,10 +179,9 @@ namespace OnlineBookShop.DAO
                 res = res.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).OrderBy(x => x.GiaBan).ToList();
             }
 
-            if (giaMin > 0 && giaMax >= giaMin)
+            if (giaMin > 0 && giaMax >= giaMin || giaMin > 0)
             {
                 res = res.Where(x => x.GiaBan >= giaMin && x.GiaBan <= giaMax).OrderBy(x => x.GiaBan).ToList();
-
             }
             else if (giaMin >= 0 && giaMax == 0)
             {
@@ -193,6 +192,17 @@ namespace OnlineBookShop.DAO
                 res = res.Where(x => x.GiaBan <= giaMax).OrderBy(x => x.GiaBan).ToList();
 
             }
+
+            if (searchField == "GiaGiam")
+            {
+                res = res.OrderByDescending(x => x.GiaBan).ToList();
+            }
+            else if (searchField == "GiaTang")
+            {
+                res = res.OrderBy(x => x.GiaBan).ToList();
+
+            }
+
 
 
             return res.ToPagedList(page, pageSize);

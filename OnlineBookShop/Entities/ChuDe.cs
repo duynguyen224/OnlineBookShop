@@ -18,8 +18,9 @@
 
         public int ID { get; set; }
 
-        [StringLength(50)]
+        [StringLength(500)]
         [DisplayName("Tên chủ đề")]
+        [Required(ErrorMessage = "Hãy nhập tên chủ đề")]
         public string TenCD { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

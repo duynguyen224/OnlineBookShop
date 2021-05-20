@@ -31,9 +31,14 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(TacGia tg)
         {
-            TacGiaDao dao = new TacGiaDao();
-            dao.insertTacGia(tg);
-            return RedirectToAction("Index", "Author");
+            if (ModelState.IsValid)
+            {
+                TacGiaDao dao = new TacGiaDao();
+                dao.insertTacGia(tg);
+                return RedirectToAction("Index", "Author");
+
+            }
+            return View();
         }
 
         [HttpGet]
@@ -47,9 +52,14 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(TacGia tg)
         {
-            TacGiaDao dao = new TacGiaDao();
-            dao.updateTacGia(tg);
-            return RedirectToAction("Index", "Author");
+            if (ModelState.IsValid)
+            {
+                TacGiaDao dao = new TacGiaDao();
+                dao.updateTacGia(tg);
+                return RedirectToAction("Index", "Author");
+
+            }
+            return View(tg);
         }
 
         [HttpGet]
