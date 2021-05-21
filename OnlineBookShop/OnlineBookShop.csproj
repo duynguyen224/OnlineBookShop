@@ -2056,6 +2056,7 @@
     <Content Include="Areas\Admin\Views\Author\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Author\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Author\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Create1.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

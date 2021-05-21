@@ -29,6 +29,13 @@
 
 
 </head>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+
 
 <style>
 
@@ -70,7 +77,7 @@
                 @using (Html.BeginForm("Index", "Home", FormMethod.Get))
                 {
                     <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small col-12" placeholder="Nhập từ khóa ..."
+                        <input type="text" class="form-control bg-light border-0 small col-12" style="margin-right:10px" placeholder="Nhập từ khóa ..."
                                aria-label="Search" value="@ViewBag.searchString" aria-describedby="basic-addon2" name="searchString">
                         @Html.DropDownList("searchField", ViewBag.searchField as SelectList, new { @class = "form-control" })
                         <input type="number" class="form-control bg-light border-0 small col-12" placeholder="Giá từ ..."
@@ -90,9 +97,11 @@
 
             </nav>
 
-            <p>
-                @Html.ActionLink("Thêm sách mới", "Create")
-            </p>
+            @*<p>
+            @Html.ActionLink("Thêm sách mới", "Create")
+        </p>*@
+                    <a href="@Url.Content("~/Admin/Home/Create")" class="btn btn-outline-success"><span class="glyphicon glyphicon-search"></span>Thêm mới</a>
+
 
 
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -119,11 +128,17 @@
                             <td>@item.HoTenTG</td>
                             <td>@item.TenCD</td>
                             <td>@item.TenNXB</td>
+                            @*<td>
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }) |
+                            @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
+                        </td>*@
                             <td>
-                                @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
-                                @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }) |
-                                @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
+                                <a href="@Url.Content("~/Admin/Home/Edit?id=")@item.ID" class="btn btn-outline-warning"><span class="glyphicon glyphicon-pencil"></span>Edit</a>
+                                <a href="@Url.Content("~/Admin/Home/Details?id=")@item.ID" class="btn btn-outline-primary"><span class="glyphicon glyphicon-search"></span>Details</a>
+                                <a href="@Url.Content("~/Admin/Home/Delete?id=")@item.ID" class="btn btn-outline-danger"><span class="glyphicon glyphicon-trash"></span>Delete</a>
                             </td>
+
 
                         </tr>
                     }

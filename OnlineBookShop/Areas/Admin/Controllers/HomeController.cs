@@ -57,6 +57,41 @@ namespace OnlineBookShop.Areas.Admin.Controllers
 
 
         [HttpGet]
+        public ActionResult Create1()
+        {
+            setViewBag();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create1(BookDetails bd)
+        {
+            setViewBag();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    bd.AnhBia = "";
+                    string fileName = Path.GetFileNameWithoutExtension(bd.ImageFile.FileName);
+                    string extension = Path.GetExtension(bd.ImageFile.FileName);
+                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    bd.AnhBia = "~/Image/" + fileName;
+                    fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+                    bd.ImageFile.SaveAs(fileName);
+                    SachDao dao = new SachDao();
+                    dao.insertSach(bd);
+                    ModelState.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+        [HttpGet]
         public ActionResult Create()
         {
             setViewBag();
