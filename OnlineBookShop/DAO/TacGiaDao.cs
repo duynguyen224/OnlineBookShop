@@ -34,6 +34,8 @@ namespace OnlineBookShop.DAO
         {
             if(tacgia != null)
             {
+                tacgia.MetaTitle = new LocDau().nameToMeta(tacgia.HoTenTG);
+                tacgia.Status = true;
                 db.TacGias.Add(tacgia);
                 db.SaveChanges();
             }
@@ -59,6 +61,8 @@ namespace OnlineBookShop.DAO
                 record.DiaChi = tacgia.DiaChi;
                 record.TieuSu = tacgia.TieuSu;
                 record.DienThoai = tacgia.DienThoai;
+                record.MetaTitle = new LocDau().nameToMeta(tacgia.HoTenTG);
+                record.Status = true;
                 db.SaveChanges();
             }
         }

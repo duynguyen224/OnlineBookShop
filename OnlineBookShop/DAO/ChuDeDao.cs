@@ -32,6 +32,8 @@ namespace OnlineBookShop.DAO
         {
             ChuDe cd = new ChuDe();
             cd.TenCD = chude.TenCD;
+            cd.MetaTitle = new LocDau().nameToMeta(chude.TenCD);
+            cd.Status = true;
             db.ChuDes.Add(cd);
             db.SaveChanges();
         }
@@ -54,6 +56,8 @@ namespace OnlineBookShop.DAO
             if(record != null)
             {
                 record.TenCD = chude.TenCD;
+                record.MetaTitle = new LocDau().nameToMeta(chude.TenCD);
+                record.Status = true;
                 db.SaveChanges();
             }
         }

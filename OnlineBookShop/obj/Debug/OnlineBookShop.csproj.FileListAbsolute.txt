@@ -72,7 +72,6 @@ D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\bin\System
 D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\bin\Newtonsoft.Json.xml
 D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\bin\Antlr3.Runtime.pdb
 D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\obj\Debug\OnlineBookShop.csprojAssemblyReference.cache
 D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\obj\Debug\OnlineBookShop.csproj.CoreCompileInputs.cache
 D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\obj\Debug\OnlineBookShop.csproj.CopyComplete
 D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\obj\Debug\OnlineBookShop.dll
@@ -85,3 +84,4 @@ D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\bin\PagedL
 D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\bin\PagedList.Mvc.dll
 D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\bin\PagedList.xml
 D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\bin\PagedList.Mvc.xml
+D:\2 Coding-Projects\OnlineBookShop_Web\OnlineBookShop\OnlineBookShop\obj\Debug\OnlineBookShop.csproj.AssemblyReference.cache

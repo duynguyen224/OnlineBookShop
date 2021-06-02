@@ -36,6 +36,8 @@ namespace OnlineBookShop.DAO
             nxb.TenNXB = _nxb.TenNXB;
             nxb.DiaChi = _nxb.DiaChi;
             nxb.DienThoai = _nxb.DienThoai;
+            nxb.MetaTitle = new LocDau().nameToMeta(_nxb.TenNXB);
+            nxb.Status = true;
             db.NhaXuatBans.Add(nxb);
             db.SaveChanges();
         }
@@ -60,6 +62,8 @@ namespace OnlineBookShop.DAO
                 record.TenNXB = _nxb.TenNXB;
                 record.DiaChi = _nxb.DiaChi;
                 record.DienThoai = _nxb.DienThoai;
+                record.MetaTitle = new LocDau().nameToMeta(_nxb.TenNXB);
+                record.Status = true;
                 db.SaveChanges();
 
             }
