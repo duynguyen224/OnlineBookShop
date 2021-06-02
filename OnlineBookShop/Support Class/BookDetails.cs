@@ -44,9 +44,22 @@ namespace OnlineBookShop.Support_Class
 
         public string TenNXB { get; set; }
 
+        [DisplayName("Bìa sau")]
+
+        public string BiaSau { get; set; }
+
+        [DisplayName("Mô tả")]
+        public string MoTa { get; set; }
+
+        [DisplayName("Mô tả chi tiết")]
+        public string Detail { get; set; }
+
         [NotMapped]
         public HttpPostedFileBase ImageFile { get; set; }
+        [NotMapped]
+        public HttpPostedFileBase ImageFile1 { get; set; }
 
-       
+
+
     }
 }

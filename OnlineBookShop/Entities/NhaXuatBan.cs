@@ -1,8 +1,7 @@
-﻿namespace OnlineBookShop.Entities
+namespace OnlineBookShop.Entities
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -18,20 +17,21 @@
 
         public int ID { get; set; }
 
-        [StringLength(50)]
-        [DisplayName("Tên nhà xuất bản")]
-        [Required(ErrorMessage = "Hãy nhập tên nhà xuất bản")]
+        [StringLength(200)]
         public string TenNXB { get; set; }
 
-        [StringLength(50)]
-        [DisplayName("Địa chỉ")]
-
+        [StringLength(200)]
         public string DiaChi { get; set; }
 
         [StringLength(50)]
-        [DisplayName("Điện thoại")]
-
         public string DienThoai { get; set; }
+
+        [StringLength(250)]
+        public string MetaTitle { get; set; }
+
+        public int? DisplayOrder { get; set; }
+
+        public bool? Status { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sach> Saches { get; set; }

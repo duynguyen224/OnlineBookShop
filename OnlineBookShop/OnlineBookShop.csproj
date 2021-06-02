@@ -146,24 +146,31 @@
     <Compile Include="DAO\TacGiaDao.cs" />
     <Compile Include="DAO\ThamGiaDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
-    <Compile Include="Entities\ChiTietDonHang.cs" />
+    <Compile Include="Entities\About.cs" />
     <Compile Include="Entities\ChiTietPhieuNhap.cs" />
     <Compile Include="Entities\ChuDe.cs" />
-    <Compile Include="Entities\DonHang.cs" />
-    <Compile Include="Entities\GioHang.cs" />
-    <Compile Include="Entities\KhachHang.cs" />
+    <Compile Include="Entities\Contact.cs" />
+    <Compile Include="Entities\FeedBack.cs" />
+    <Compile Include="Entities\Footer.cs" />
+    <Compile Include="Entities\Menu.cs" />
+    <Compile Include="Entities\MenuType.cs" />
     <Compile Include="Entities\NhaXuatBan.cs" />
     <Compile Include="Entities\OnlineBookShopDbContext.cs" />
+    <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\OrderDetail.cs" />
     <Compile Include="Entities\PhieuNhap.cs" />
     <Compile Include="Entities\Sach.cs" />
+    <Compile Include="Entities\Slide.cs" />
     <Compile Include="Entities\TacGia.cs" />
     <Compile Include="Entities\ThamGia.cs" />
+    <Compile Include="Entities\TinTuc.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support Class\BookDetails.cs" />
+    <Compile Include="Support Class\LocDau.cs" />
     <Compile Include="Support Class\SearchField.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2056,7 +2063,6 @@
     <Content Include="Areas\Admin\Views\Author\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Author\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Author\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Create1.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

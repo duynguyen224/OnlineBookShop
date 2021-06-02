@@ -6,28 +6,36 @@ namespace OnlineBookShop.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ChuDe")]
-    public partial class ChuDe
+    [Table("Order")]
+    public partial class Order
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ChuDe()
+        public Order()
         {
-            Saches = new HashSet<Sach>();
+            OrderDetails = new HashSet<OrderDetail>();
         }
 
         public int ID { get; set; }
 
-        [StringLength(250)]
-        public string TenCD { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
-        [StringLength(250)]
-        public string MetaTitle { get; set; }
+        public int? CustomerID { get; set; }
 
-        public int? DisplayOrder { get; set; }
+        [StringLength(100)]
+        public string ShipName { get; set; }
+
+        [StringLength(100)]
+        public string ShipMobile { get; set; }
+
+        [StringLength(100)]
+        public string ShipAddress { get; set; }
+
+        [StringLength(100)]
+        public string ShipEmail { get; set; }
 
         public bool? Status { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Sach> Saches { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

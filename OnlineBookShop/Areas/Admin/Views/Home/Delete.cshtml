@@ -23,6 +23,7 @@
                         <th>Tên sách</th>
                         <th>Giá bán</th>
                         <th>Ảnh bìa</th>
+                        <th>Bìa sau</th>
                         <th>SL tồn</th>
                         <th>Tên TG</th>
                         <th>Tên CD</th>
@@ -35,6 +36,9 @@
                         <td>@Html.DisplayFor(model => model.GiaBan)</td>
                         <td>
                             <img src="@Url.Content(Model.AnhBia)" alt="" style="height:120px; width:90px" />
+                        </td>
+                        <td>
+                            <img src="@Url.Content(Model.BiaSau)" alt="" style="height:120px; width:90px" />
                         </td>
                         <td>@Html.DisplayFor(model => model.SoLuongTon)</td>
                         <td>@Html.DisplayFor(model => model.HoTenTG)</td>
@@ -59,7 +63,7 @@
 
     </div>
 
-    </div>
+</div>
 
 
 

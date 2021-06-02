@@ -19,6 +19,7 @@ namespace OnlineBookShop.DAO
             db = new OnlineBookShopDbContext();
         }
 
+
         public List<BookDetails> listAllBook()
         {
             var res = db.Database.SqlQuery<BookDetails>("proc_sach_BookDetails").ToList();
@@ -43,38 +44,39 @@ namespace OnlineBookShop.DAO
 
             Sach s = new Sach();
             s.TenSach = bd.TenSach;
+            s.MetaTitle = new LocDau().nameToMeta(s.TenSach);
             s.GiaBan = bd.GiaBan;
             s.AnhBia = bd.AnhBia;
+            s.BiaSau = bd.BiaSau;
             s.SoLuongTon = bd.SoLuongTon;
-
+            s.MoTa = bd.MoTa;
+            s.Detail = bd.Detail;
+            if (s.SoLuongTon > 0)
+            {
+                s.Status = true;
+            }
             if (s.AnhBia == null || s.AnhBia == "")
             {
                 s.AnhBia = "~/Image/32f68a3b36b6c60f1d8bac9ba4af46fc.jpg";
-
+            }
+            if (s.BiaSau == null || s.BiaSau == "")
+            {
+                s.BiaSau = "~/Image/32f68a3b36b6c60f1d8bac9ba4af46fc.jpg";
             }
 
+            // Tìm id chủ để và id nxb để insert Sach
             s.MaCD = cdDao.getIdChuDe_byName(bd.TenCD);
-
-
-
             s.MaNXB = nxbDao.getIdNXB_byName(bd.TenNXB);
-
+            s.NgayCapNhat = DateTime.Now;
 
             // insert sach
             db.Saches.Add(s);
-
-
-            s.NgayCapNhat = DateTime.Now;
-
-            db.Saches.Add(s);
             db.SaveChanges();
-
 
             // insert ThamGia
             int masach = getIdSach_byName(bd.TenSach);
             int matacgia = tgDao.getIdTacGia_byName(bd.HoTenTG);
             thamgiaDao.insertThamGia(masach, matacgia);
-
 
         }
 
@@ -90,52 +92,64 @@ namespace OnlineBookShop.DAO
             var id = bd.ID;
             var s = db.Saches.Where(x => x.ID == id).FirstOrDefault();
 
+            var matacgiacu = thamgiaDao.getIdTacGia_byIdSach(id);
             //Sach s = new Sach();
             s.TenSach = bd.TenSach;
+            s.MetaTitle = new LocDau().nameToMeta(s.TenSach);
             s.GiaBan = bd.GiaBan;
             s.AnhBia = bd.AnhBia;
+            s.BiaSau = bd.BiaSau;
             s.SoLuongTon = bd.SoLuongTon;
+            s.MoTa = bd.MoTa;
+            s.Detail = bd.Detail;
+            s.NgayCapNhat = DateTime.Now;
 
+
+            if (s.SoLuongTon > 0)
+            {
+                s.Status = true;
+            }
             if (s.AnhBia == null || s.AnhBia == "")
             {
                 s.AnhBia = "~/Image/32f68a3b36b6c60f1d8bac9ba4af46fc.jpg";
-
+            }
+            if (s.BiaSau == null || s.BiaSau == "")
+            {
+                s.BiaSau = "~/Image/32f68a3b36b6c60f1d8bac9ba4af46fc.jpg";
             }
 
-
             s.MaCD = cdDao.getIdChuDe_byName(bd.TenCD);
-
-            #region
-            #endregion
-
-            // kiểm tra NhaXuatBan
             s.MaNXB = nxbDao.getIdNXB_byName(bd.TenNXB);
 
 
 
-            // kiểm tra TacGia
-
-            s.NgayCapNhat = DateTime.Now;
-
-
             db.SaveChanges();
 
-
+            // kiểm tra TacGia
+            // Nếu tác giả mới thì tacGiaMoi = true
+            int masach = getIdSach_byName(bd.TenSach);
+            int matacgiamoi = tgDao.getIdTacGia_byName(bd.HoTenTG);
+            if (thamgiaDao.alreadyJoin(masach, matacgiamoi) == 1)
+            {
+                tacGiaMoi = false;
+            }
+            else
+            {
+                tacGiaMoi = true;
+            }
             // insert ThamGia
             if (tacGiaMoi == true)
             {
-                int masach = getIdSach_byName(bd.TenSach);
-                int matacgia = tgDao.getIdTacGia_byName(bd.HoTenTG);
-                thamgiaDao.insertThamGia(masach, matacgia);
-
+                thamgiaDao.deleteThamGia(masach, matacgiacu);
+                thamgiaDao.insertThamGia(masach, matacgiamoi);
             }
         }
 
         public void deletSach(BookDetails bd)
         {
-            var id = bd.ID;
-            var i = new SqlParameter("@id", id);
-            db.Database.ExecuteSqlCommand("proc_sach_delete_byId @id", i);
+            var res = db.Saches.Find(bd.ID);
+            db.Saches.Remove(res);
+            db.SaveChanges();
         }
 
         public int getIdSach_byName(string name)
@@ -179,7 +193,7 @@ namespace OnlineBookShop.DAO
                 res = res.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).OrderBy(x => x.GiaBan).ToList();
             }
 
-            if (giaMin > 0 && giaMax >= giaMin || giaMin > 0)
+            if (giaMin > 0 && giaMax >= giaMin)
             {
                 res = res.Where(x => x.GiaBan >= giaMin && x.GiaBan <= giaMax).OrderBy(x => x.GiaBan).ToList();
             }
@@ -212,6 +226,13 @@ namespace OnlineBookShop.DAO
         {
             var res = db.Saches.Where(x => x.ID == id).FirstOrDefault();
             return res.AnhBia;
+        }
+
+        public string getPathAnotherImage_byId(int id)
+        {
+            var res = db.Saches.Where(x => x.ID == id).FirstOrDefault();
+            return res.BiaSau;
+
         }
     }
 }

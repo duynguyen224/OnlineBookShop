@@ -28,7 +28,24 @@ namespace OnlineBookShop.DAO
             db.ThamGias.Add(t);
             db.SaveChanges();
         }
+        public void deleteThamGia(int masach, int matacgia)
+        {
+            var res = db.ThamGias.Where(x => x.MaSach == masach && x.MaTG == matacgia).FirstOrDefault();
+            db.ThamGias.Remove(res);
+            db.SaveChanges();
+        }
 
-
+        public int getIdTacGia_byIdSach(int idSach)
+        {
+            var res = db.ThamGias.Where(x => x.MaSach == idSach).FirstOrDefault();
+            return res.MaTG;
+        }
+        public int alreadyJoin(int masach, int matacgia)
+        {
+            var res = db.ThamGias.Where(x => x.MaSach == masach && x.MaTG == matacgia).FirstOrDefault();
+            if (res != null)
+                return 1;
+            else return 0;
+        }
     }
 }

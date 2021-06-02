@@ -57,41 +57,6 @@ namespace OnlineBookShop.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public ActionResult Create1()
-        {
-            setViewBag();
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Create1(BookDetails bd)
-        {
-            setViewBag();
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    bd.AnhBia = "";
-                    string fileName = Path.GetFileNameWithoutExtension(bd.ImageFile.FileName);
-                    string extension = Path.GetExtension(bd.ImageFile.FileName);
-                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-                    bd.AnhBia = "~/Image/" + fileName;
-                    fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
-                    bd.ImageFile.SaveAs(fileName);
-                    SachDao dao = new SachDao();
-                    dao.insertSach(bd);
-                    ModelState.Clear();
-                    return RedirectToAction("Index", "Home");
-                }
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-        [HttpGet]
         public ActionResult Create()
         {
             setViewBag();
@@ -105,6 +70,7 @@ namespace OnlineBookShop.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    // anh bia
                     bd.AnhBia = "";
                     string fileName = Path.GetFileNameWithoutExtension(bd.ImageFile.FileName);
                     string extension = Path.GetExtension(bd.ImageFile.FileName);
@@ -112,17 +78,34 @@ namespace OnlineBookShop.Areas.Admin.Controllers
                     bd.AnhBia = "~/Image/" + fileName;
                     fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
                     bd.ImageFile.SaveAs(fileName);
+
+                    // anh bia sau
+                    bd.BiaSau = "";
+                    string fileName1 = Path.GetFileNameWithoutExtension(bd.ImageFile1.FileName);
+                    string extension1 = Path.GetExtension(bd.ImageFile1.FileName);
+                    fileName1 = fileName1 + DateTime.Now.ToString("yymmssfff") + extension1;
+                    bd.BiaSau = "~/Image/" + fileName1;
+                    fileName1 = Path.Combine(Server.MapPath("~/Image/"), fileName1);
+                    bd.ImageFile1.SaveAs(fileName1);
+
                     SachDao dao = new SachDao();
                     dao.insertSach(bd);
                     ModelState.Clear();
                     return RedirectToAction("Index", "Home");
                 }
                 return View();
+
             }
             catch
             {
-                return View();
+                SachDao dao = new SachDao();
+                dao.insertSach(bd);
+                ModelState.Clear();
+                return RedirectToAction("Index", "Home");
+
             }
+
+
         }
 
 
@@ -159,10 +142,37 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         public ActionResult Edit(BookDetails bd_new)
         {
             setViewBag(bd_new.ID);
-            if (bd_new.ImageFile == null) // luoon luoon null. neu null thi vao db lay cai duong dan ra
+            if (bd_new.ImageFile == null && bd_new.ImageFile1 == null) // luoon luoon null. neu null thi vao db lay cai duong dan ra
             {
                 SachDao sdao = new SachDao();
                 bd_new.AnhBia = sdao.getPathImage_byId(bd_new.ID);
+                bd_new.BiaSau = sdao.getPathAnotherImage_byId(bd_new.ID);
+            }
+            else if (bd_new.ImageFile != null && bd_new.ImageFile1 == null)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(bd_new.ImageFile.FileName);
+                string extension = Path.GetExtension(bd_new.ImageFile.FileName);
+                fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                bd_new.AnhBia = "~/Image/" + fileName;
+                fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+                bd_new.ImageFile.SaveAs(fileName);
+
+                SachDao sdao = new SachDao();
+                bd_new.BiaSau = sdao.getPathAnotherImage_byId(bd_new.ID);
+
+            }
+            else if (bd_new.ImageFile == null && bd_new.ImageFile1 != null)
+            {
+                string fileName1 = Path.GetFileNameWithoutExtension(bd_new.ImageFile1.FileName);
+                string extension1 = Path.GetExtension(bd_new.ImageFile1.FileName);
+                fileName1 = fileName1 + DateTime.Now.ToString("yymmssfff") + extension1;
+                bd_new.BiaSau = "~/Image/" + fileName1;
+                fileName1 = Path.Combine(Server.MapPath("~/Image/"), fileName1);
+                bd_new.ImageFile1.SaveAs(fileName1);
+
+                SachDao sdao = new SachDao();
+                bd_new.AnhBia = sdao.getPathImage_byId(bd_new.ID);
+
             }
             else // neu co thay doi thi nhu create
             {
@@ -172,6 +182,16 @@ namespace OnlineBookShop.Areas.Admin.Controllers
                 bd_new.AnhBia = "~/Image/" + fileName;
                 fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
                 bd_new.ImageFile.SaveAs(fileName);
+
+                string fileName1 = Path.GetFileNameWithoutExtension(bd_new.ImageFile1.FileName);
+                string extension1 = Path.GetExtension(bd_new.ImageFile1.FileName);
+                fileName1 = fileName1 + DateTime.Now.ToString("yymmssfff") + extension1;
+                bd_new.BiaSau = "~/Image/" + fileName1;
+                fileName1 = Path.Combine(Server.MapPath("~/Image/"), fileName1);
+                bd_new.ImageFile1.SaveAs(fileName1);
+
+
+
             }
 
             try // xong rui moi update
@@ -190,8 +210,6 @@ namespace OnlineBookShop.Areas.Admin.Controllers
             catch
             {
                 return View(bd_new);
-
-
             }
         }
 
