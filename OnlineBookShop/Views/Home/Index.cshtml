@@ -1,0 +1,253 @@
+﻿
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Slides = (List<OnlineBookShop.Entities.Slide>)ViewBag.Slides;
+    var activeSlide = true;
+    var ListNewBook = (List<OnlineBookShop.Entities.Sach>)ViewBag.ListNewBook;
+    var ListRecommend = (List<OnlineBookShop.Entities.Sach>)ViewBag.ListRecommend;
+}
+
+@section slide{
+    <section id="slider">
+        <!--slider-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#slider-carousel" data-slide-to="1"></li>
+                            <li data-target="#slider-carousel" data-slide-to="2"></li>
+                        </ol>
+
+                        <div class="carousel-inner">
+                            @foreach (var item in Slides)
+                            {
+                                if (activeSlide == true)
+                                {
+                                    <div class="item active">
+                                        <div class="col-sm-6">
+                                            <h1><span>Book</span>-Store</h1>
+                                            <h2>Nguồn tri thức bất tận của nhân loại</h2>
+                                            <p>"Chỉ trong sách, con người mới biết đến sự thật, tình yêu và cái đẹp hoàn hảo." - George Bernard Shaw</p>
+                                            <button type="button" class="btn btn-default get">Get it now</button>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <img src="@Url.Content(@item.Image)" class="girl img-responsive" alt="" />
+                                        </div>
+                                    </div>
+                                    activeSlide = false;
+                                }
+                                else
+                                {
+                                    <div class="item">
+                                        <div class="col-sm-6">
+                                            <h1><span>Book</span>-Store</h1>
+                                            <h2>Nguồn tri thức bất tận của nhân loại</h2>
+                                            <p>"Chỉ trong sách, con người mới biết đến sự thật, tình yêu và cái đẹp hoàn hảo." - George Bernard Shaw</p>
+                                            <button type="button" class="btn btn-default get">Get it now</button>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <img href="@item.Link" src="@Url.Content(@item.Image)" class="girl img-responsive" alt="" />
+                                        </div>
+                                    </div>
+
+                                }
+                            }
+
+                        </div>
+
+                        <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section><!--/slider-->
+
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="left-sidebar">
+                <h2>Category</h2>
+                <div class="panel-group category-products" id="accordian">
+                    <!--category-productsr-->
+
+                    @{ Html.RenderAction("ProductCategory", "Product");}
+
+
+
+                </div><!--/category-products-->
+
+                <div class="brands_products">
+                    <!--brands_products-->
+                    <h2>Brands</h2>
+                    <div class="brands-name">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="#"> <span class="pull-right">(50)</span>Acne</a></li>
+                            <li><a href="#"> <span class="pull-right">(56)</span>Grüne Erde</a></li>
+                            <li><a href="#"> <span class="pull-right">(27)</span>Albiro</a></li>
+                            <li><a href="#"> <span class="pull-right">(32)</span>Ronhill</a></li>
+                            <li><a href="#"> <span class="pull-right">(5)</span>Oddmolly</a></li>
+                            <li><a href="#"> <span class="pull-right">(9)</span>Boudestijn</a></li>
+                            <li><a href="#"> <span class="pull-right">(4)</span>Rösch creative culture</a></li>
+                        </ul>
+                    </div>
+                </div><!--/brands_products-->
+
+                <div style="padding-bottom:50px"></div>
+                <div class="text-center">
+                    <!--shipping-->
+                    <img src="~/Assets/Admin2/images/home/_shipping.jpg" alt="" />
+                </div><!--/shipping-->
+
+                <div style="padding-bottom:50px"></div>
+                <div class="text-center">
+                    <!--shipping-->
+                    <img src="~/Assets/Admin2/images/home/_shipping3.jpg" alt="" />
+                </div><!--/shipping-->
+
+            </div>
+        </div>
+        <div class="col-sm-9 padding-right">
+            <div class="features_items">
+                <!--features_items-->
+                <h2 class="title text-center">
+                    <a class="btn hvr-hover" href="~/Product/VanHoc">Sách mới về</a>
+                </h2>
+                @foreach (var item in ListNewBook)
+                {
+                    var url = "/chi-tiet/" + @item.MetaTitle + "-" + @item.ID;
+                    <div class="col-sm-3">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <a href="#">
+                                        <a href="@url">
+                                            <img src="@Url.Content(@item.AnhBia)" alt="" />
+                                        </a>
+                                        <h2>@item.TenSach</h2>
+
+                                        <h3>@item.GiaBan VND</h3>
+                                        <p>@item.MoTa</p>
+                                        <a href="@url" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div><!--features_items-->
+            <div class="features_items">
+                <!--features_items-->
+                <h2 class="title text-center">
+                    <a class="btn hvr-hover" href="~/Product/VanHoc">Văn Học</a>
+                </h2>
+                @foreach (var item in ListNewBook)
+                {
+                    var url = "/chi-tiet/" + @item.MetaTitle + "-" + @item.ID;
+                    <div class="col-sm-3">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <a href="#">
+                                        <a href="@url">
+                                            <img src="@Url.Content(@item.AnhBia)" alt="" />
+                                        </a>
+                                        <h2>@item.TenSach</h2>
+
+                                        <h3>@item.GiaBan VND</h3>
+                                        <p>@item.MoTa</p>
+                                        <a href="@url" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+
+
+                                    </a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+            </div><!--features_items-->
+
+            <div class="recommended_items">
+                <!--recommended_items-->
+                <h2 class="title text-center">
+                    <a class="btn hvr-hover" href="~/Product/VanHoc">Văn Học</a>
+                </h2>
+
+                <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            @foreach (var item in ListRecommend)
+                            {
+                                var url = "/chi-tiet/" + @item.MetaTitle + "-" + @item.ID;
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="@Url.Content(item.AnhBia)" alt="" style="width:50%; height:50%" />
+                                                <h2>@item.TenSach</h2>
+                                                <h3>@item.GiaBan</h3>
+                                                <p>@item.MoTa</p>
+                                                <a href="@url" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                        @*after active*@
+                    <div class="item">
+                        @foreach (var item in ListRecommend)
+                        {
+                            var url = "/chi-tiet/" + @item.MetaTitle + "-" + @item.ID;
+                            <div class="col-sm-4">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <a href="@url">
+                                                <img href="@url" src="@Url.Content(item.AnhBia)" alt="" style="width:50%; height:50%" />
+                                            </a>                                            
+                                            <h2>@item.TenSach</h2>
+                                            <h3>@item.GiaBan</h3>
+                                            <p>@item.MoTa</p>
+                                            <a href="@url" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+                    </div>
+                    <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+            </div><!--/recommended_items-->
+
+        </div>
+
+    </div>
+</div>

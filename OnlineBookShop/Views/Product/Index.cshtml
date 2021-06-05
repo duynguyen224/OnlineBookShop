@@ -1,0 +1,88 @@
+﻿
+@model OnlineBookShop.Entities.ChuDe
+
+
+@{
+    ViewBag.Title = "CategoryDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var BookByCategory = (List<OnlineBookShop.Entities.Sach>)ViewBag.BookByCategory;
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Category</h2>
+                    <div class="panel-group category-products" id="accordian">
+                        <!--category-productsr-->
+                        @{ Html.RenderAction("ProductCategory", "Product");}
+                    </div><!--/category-productsr-->
+
+                    <div class="brands_products">
+                        <!--brands_products-->
+                        <h2>Brands</h2>
+                        <div class="brands-name">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href=""> <span class="pull-right">(50)</span>Acne</a></li>
+                                <li><a href=""> <span class="pull-right">(56)</span>Grüne Erde</a></li>
+                                <li><a href=""> <span class="pull-right">(27)</span>Albiro</a></li>
+                                <li><a href=""> <span class="pull-right">(32)</span>Ronhill</a></li>
+                                <li><a href=""> <span class="pull-right">(5)</span>Oddmolly</a></li>
+                                <li><a href=""> <span class="pull-right">(9)</span>Boudestijn</a></li>
+                                <li><a href=""> <span class="pull-right">(4)</span>Rösch creative culture</a></li>
+                            </ul>
+                        </div>
+                    </div><!--/brands_products-->
+
+
+
+                </div>
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                <div class="features_items">
+                    <!--features_items-->
+                    <h2 class="title text-center">@Model.TenCD</h2>
+                    @foreach (var item in BookByCategory)
+                    {
+                        if (item != null)
+                        {
+                            var url = "/chi-tiet/" + @item.MetaTitle + "-" + @item.ID;
+                            <div class="col-md-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <a href="@url">
+                                                <a href="@url">
+                                                    <img src="@Url.Content(@item.AnhBia)" alt="" />
+                                                </a>
+                                                <h2>@item.TenSach</h2>
+                                                <h3>@item.GiaBan VND</h3>
+                                                <p>@item.MoTa</p>
+                                                <a href="@url" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    }
+
+
+
+                    <ul class="pagination">
+                        <li class="active"><a href="">1</a></li>
+                        <li><a href="">2</a></li>
+                        <li><a href="">3</a></li>
+                        <li><a href="">&raquo;</a></li>
+                    </ul>
+                </div><!--features_items-->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

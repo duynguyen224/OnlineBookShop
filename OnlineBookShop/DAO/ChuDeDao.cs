@@ -28,6 +28,8 @@ namespace OnlineBookShop.DAO
             return res.ToPagedList(page, pageSize);
         }
 
+
+
         public void insertChuDe(ChuDe chude)
         {
             ChuDe cd = new ChuDe();
@@ -78,8 +80,14 @@ namespace OnlineBookShop.DAO
         public List<ChuDe> listAll()
         {
 
-            return db.ChuDes.ToList();
+            return db.ChuDes.Where(x=>x.Status == true).OrderBy(x=>x.DisplayOrder).ToList();
         }
 
+
+
+        public ChuDe CategoryDetail(int id)
+        {
+            return db.ChuDes.Find(id);
+        }
     }
 }
