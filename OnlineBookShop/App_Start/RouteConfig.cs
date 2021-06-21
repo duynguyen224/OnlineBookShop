@@ -21,11 +21,35 @@ namespace OnlineBookShop
                 new[] { "OnlineBookShop.Controllers" }
             );
 
+            // chi tiết tin tức
+            routes.MapRoute(
+                name: "News detail",
+                url: "chi-tiet-tin-tuc/{metatitle}-{id}",
+                defaults: new { controller = "News", action = "Detail", id = UrlParameter.Optional },
+                new[] { "OnlineBookShop.Controllers" }
+            );
+
             // tin tức
             routes.MapRoute(
                 name: "News",
                 url: "tin-tuc/{action}/{id}",
                 defaults: new { controller = "News", action = "Index", id = UrlParameter.Optional },
+                new[] { "OnlineBookShop.Controllers" }
+            );
+
+            // hoàn thành
+            routes.MapRoute(
+                name: "finish",
+                url: "hoan-thanh/{action}/{id}",
+                defaults: new { controller = "Finish", action = "Index", id = UrlParameter.Optional },
+                new[] { "OnlineBookShop.Controllers" }
+            );
+
+            // tìm kiếm
+            routes.MapRoute(
+                name: "Search",
+                url: "tim-kiem/{action}/{id}",
+                defaults: new { controller = "Product", action = "ProductSearch", id = UrlParameter.Optional },
                 new[] { "OnlineBookShop.Controllers" }
             );
 
@@ -60,6 +84,42 @@ namespace OnlineBookShop
                 defaults: new { controller = "Contact", action = "Index", id = UrlParameter.Optional },
                 new[] { "OnlineBookShop.Controllers" }
             );
+
+            // thêm vào giỏ hàng
+            routes.MapRoute(
+                name: "Add to cart",
+                url: "gio-hang",
+                defaults: new { controller = "Cart", action = "AddItem", id = UrlParameter.Optional },
+                new[] { "OnlineBookShop.Controllers" }
+            );
+
+            // giỏ hàng
+            routes.MapRoute(
+                name: "Cart",
+                url: "xem-gio-hang",
+                defaults: new { controller = "Cart", action = "Index", id = UrlParameter.Optional },
+                new[] { "OnlineBookShop.Controllers" }
+            );
+
+
+            // thanh toán
+            routes.MapRoute(
+                name: "Payment",
+                url: "thanh-toan",
+                defaults: new { controller = "Cart", action = "Payment", id = UrlParameter.Optional },
+                new[] { "OnlineBookShop.Controllers" }
+            );
+
+            // đăng nhập
+            routes.MapRoute(
+                name: "Login",
+                url: "dang-nhap/{action}/{id}",
+                defaults: new { controller = "User", action = "Login", id = UrlParameter.Optional },
+                new[] { "OnlineBookShop.Controllers" }
+            );
+
+
+
 
             // default
             routes.MapRoute(

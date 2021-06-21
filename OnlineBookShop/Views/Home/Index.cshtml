@@ -5,8 +5,11 @@
     var Slides = (List<OnlineBookShop.Entities.Slide>)ViewBag.Slides;
     var activeSlide = true;
     var ListNewBook = (List<OnlineBookShop.Entities.Sach>)ViewBag.ListNewBook;
+    var ListNewBook1 = (List<OnlineBookShop.Entities.Sach>)ViewBag.ListNewBook1;
+
     var ListRecommend = (List<OnlineBookShop.Entities.Sach>)ViewBag.ListRecommend;
 }
+@using System.Globalization
 
 @section slide{
     <section id="slider">
@@ -73,7 +76,19 @@
 
 }
 
+<style>
+    .productinfo p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        color: #ffa31a;
+    }
+</style>
+
+
 <div class="container">
+
+
     <div class="row">
         <div class="col-sm-3">
             <div class="left-sidebar">
@@ -121,10 +136,11 @@
             <div class="features_items">
                 <!--features_items-->
                 <h2 class="title text-center">
-                    <a class="btn hvr-hover" href="~/Product/VanHoc">Sách mới về</a>
+                    Sách mới về
                 </h2>
                 @foreach (var item in ListNewBook)
                 {
+
                     var url = "/chi-tiet/" + @item.MetaTitle + "-" + @item.ID;
                     <div class="col-sm-3">
                         <div class="product-image-wrapper">
@@ -132,13 +148,15 @@
                                 <div class="productinfo text-center">
                                     <a href="#">
                                         <a href="@url">
-                                            <img src="@Url.Content(@item.AnhBia)" alt="" />
+                                            <img src="@Url.Content(@item.AnhBia)" alt="" style="width:160px; height:230px" />
                                         </a>
-                                        <h2>@item.TenSach</h2>
+                                        <h4 style="font-size:18px">@item.TenSach</h4>
 
-                                        <h3>@item.GiaBan VND</h3>
-                                        <p>@item.MoTa</p>
-                                        <a href="@url" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        @*<h5>@item.GiaBan VND</h5>*@
+                                        <p>@(Convert.ToDouble(item.GiaBan).ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN")))</p>
+
+
+                                        <a href="/gio-hang?productId=@item.ID&quantity=1" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                     </a>
 
                                 </div>
@@ -147,14 +165,15 @@
 
                         </div>
                     </div>
+
                 }
             </div><!--features_items-->
             <div class="features_items">
                 <!--features_items-->
                 <h2 class="title text-center">
-                    <a class="btn hvr-hover" href="~/Product/VanHoc">Văn Học</a>
+                    Sách bán chạy
                 </h2>
-                @foreach (var item in ListNewBook)
+                @foreach (var item in ListNewBook1)
                 {
                     var url = "/chi-tiet/" + @item.MetaTitle + "-" + @item.ID;
                     <div class="col-sm-3">
@@ -163,13 +182,14 @@
                                 <div class="productinfo text-center">
                                     <a href="#">
                                         <a href="@url">
-                                            <img src="@Url.Content(@item.AnhBia)" alt="" />
+                                            <img src="@Url.Content(@item.AnhBia)" alt="" style="width:160px; height:230px" />
                                         </a>
-                                        <h2>@item.TenSach</h2>
+                                        <h4 style="font-size:18px">@item.TenSach</h4>
 
-                                        <h3>@item.GiaBan VND</h3>
-                                        <p>@item.MoTa</p>
-                                        <a href="@url" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        @*<h5>@item.GiaBan VND</h5>*@
+                                        <p>@(Convert.ToDouble(item.GiaBan).ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN")))</p>
+
+                                        <a href="/gio-hang?productId=@item.ID&quantity=1" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 
 
                                     </a>
@@ -186,7 +206,7 @@
             <div class="recommended_items">
                 <!--recommended_items-->
                 <h2 class="title text-center">
-                    <a class="btn hvr-hover" href="~/Product/VanHoc">Văn Học</a>
+                    Sản phẩm gợi ý
                 </h2>
 
                 <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
@@ -195,15 +215,16 @@
                             @foreach (var item in ListRecommend)
                             {
                                 var url = "/chi-tiet/" + @item.MetaTitle + "-" + @item.ID;
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo text-center">
-                                                <img src="@Url.Content(item.AnhBia)" alt="" style="width:50%; height:50%" />
-                                                <h2>@item.TenSach</h2>
-                                                <h3>@item.GiaBan</h3>
-                                                <p>@item.MoTa</p>
-                                                <a href="@url" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                <img src="@Url.Content(item.AnhBia)" alt="" style="width:150px; height:200px" />
+                                                <h4 style="font-size:18px">@item.TenSach</h4>
+                                                @*<h5>@item.GiaBan</h5>*@
+                                                <p>@(Convert.ToDouble(item.GiaBan).ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN")))</p>
+
+                                                <a href="/gio-hang?productId=@item.ID&quantity=1" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                             </div>
 
                                         </div>
@@ -213,30 +234,31 @@
                             }
                         </div>
                         @*after active*@
-                    <div class="item">
-                        @foreach (var item in ListRecommend)
-                        {
-                            var url = "/chi-tiet/" + @item.MetaTitle + "-" + @item.ID;
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <a href="@url">
-                                                <img href="@url" src="@Url.Content(item.AnhBia)" alt="" style="width:50%; height:50%" />
-                                            </a>                                            
-                                            <h2>@item.TenSach</h2>
-                                            <h3>@item.GiaBan</h3>
-                                            <p>@item.MoTa</p>
-                                            <a href="@url" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
+                        <div class="item">
+                            @foreach (var item in ListRecommend)
+                            {
+                                var url = "/chi-tiet/" + @item.MetaTitle + "-" + @item.ID;
+                                <div class="col-sm-3">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <a href="@url">
+                                                    <img href="@url" src="@Url.Content(item.AnhBia)" alt="" style="width:150px; height:200px" />
+                                                </a>
+                                                <h4 style="font-size:18px">@item.TenSach</h4>
+                                                @*<h5>@item.GiaBan</h5>*@
+                                                <p>@(Convert.ToDouble(item.GiaBan).ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN")))</p>
 
+                                                <a href="/gio-hang?productId=@item.ID&quantity=1" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                        }
+                            }
 
-                    </div>
+                        </div>
                     </div>
                     <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
                         <i class="fa fa-angle-left"></i>

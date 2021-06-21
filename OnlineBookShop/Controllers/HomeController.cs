@@ -13,8 +13,10 @@ namespace OnlineBookShop.Controllers
         public ActionResult Index()
         {
             ViewBag.Slides = new SlideDao().listAll();
-            ViewBag.ListNewBook = new SachDao().listNewBook(20);
-            ViewBag.ListRecommend = new SachDao().listRecommend(3);
+            ViewBag.ListNewBook = new SachDao().listNewBook(8);
+            ViewBag.ListNewBook1 = new SachDao().listNewBook1(8);
+
+            ViewBag.ListRecommend = new SachDao().listRecommend(4);
             return View();
         }
 

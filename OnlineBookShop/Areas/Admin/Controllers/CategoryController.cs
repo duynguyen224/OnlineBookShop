@@ -17,6 +17,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         // GET: Admin/Category
         public ActionResult Index(string searchString = "", int page = 1, int pageSize = 5)
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             ChuDeDao dao = new ChuDeDao();
             var list = dao.listAll(searchString, page, pageSize);
             ViewBag.searchString = searchString;
@@ -25,6 +30,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             return View();
         }
         [HttpPost]
@@ -43,6 +53,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             ChuDeDao dao = new ChuDeDao();
             var lítCD = dao.listAll();
             var res = lítCD.Where(x => x.ID == id).FirstOrDefault();
@@ -64,6 +79,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             ChuDeDao dao = new ChuDeDao();
             var res = dao.listAll().Where(x => x.ID == id).FirstOrDefault();
             return View(res);
@@ -72,6 +92,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             ChuDeDao dao = new ChuDeDao();
             var lítCD = dao.listAll();
             var res = lítCD.Where(x => x.ID == id).FirstOrDefault();

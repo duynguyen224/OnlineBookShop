@@ -165,6 +165,7 @@ namespace OnlineBookShop.DAO
             }
         }
 
+
         public IEnumerable<BookDetails> listAllPaging(string searchString, string searchField, int giaMin, int giaMax, int page, int pageSize)
         {
             var res = db.Database.SqlQuery<BookDetails>("proc_sach_BookDetails").ToList();
@@ -235,9 +236,33 @@ namespace OnlineBookShop.DAO
 
         }
 
+        public List<Sach> listSearch(string searchString, int giaMin, int giaMax)
+        {
+            var res = db.Saches.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList();
+            if (giaMin > 0 && giaMax >= giaMin)
+            {
+                res = res.Where(x => x.GiaBan >= giaMin && x.GiaBan <= giaMax).OrderBy(x => x.GiaBan).ToList();
+            }
+            else if (giaMin >= 0 && giaMax == 0)
+            {
+                res = res.Where(x => x.GiaBan >= giaMin).OrderBy(x => x.GiaBan).ToList();
+            }
+            else if (giaMax >= 0 && giaMin == 0)
+            {
+                res = res.Where(x => x.GiaBan <= giaMax).OrderBy(x => x.GiaBan).ToList();
+
+            }
+            return res;
+        }
+
         public List<Sach> listNewBook(int top)
         {
-            return db.Saches.OrderByDescending(x => x.NgayCapNhat).Take(top).ToList();
+            return db.Saches.OrderBy(x => x.ID).Take(top).ToList();
+        }
+
+        public List<Sach> listNewBook1(int top)
+        {
+            return db.Saches.OrderByDescending(x => x.ID).Take(top).ToList();
         }
 
         public List<Sach> listRecommend(int top)
@@ -263,7 +288,35 @@ namespace OnlineBookShop.DAO
         public List<Sach> getBookByCategory(int catID, ref int totalRecord, int pageIndex = 1, int pageSize = 1)
         {
             totalRecord = db.Saches.Where(x => x.MaCD == catID && x.Status == true && x.SoLuongTon > 0).ToList().Count();
-            return db.Saches.Where(x => x.MaCD == catID && x.Status == true && x.SoLuongTon > 0).OrderBy(x => x.GiaBan).Skip((pageSize-1)*pageIndex).Take(pageSize).ToList();
+
+            return db.Saches.Where(x => x.MaCD == catID && x.Status == true && x.SoLuongTon > 0).OrderBy(x => x.GiaBan).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
         }
+
+
+
+        public List<Sach> getBookBySearch(string searchString, int giaMin, int giaMax, ref int totalRecord, int pageIndex = 1, int pageSize = 1)
+        {
+            totalRecord = db.Saches.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).ToList().Count();
+            var res = db.Saches.Where(x => x.TenSach.ToLower().Trim().Contains(searchString.ToLower().Trim())).OrderBy(x => x.GiaBan).ToList();
+            if (giaMin > 0 && giaMax >= giaMin)
+            {
+                res = res.Where(x => x.GiaBan >= giaMin && x.GiaBan <= giaMax).OrderBy(x => x.GiaBan).ToList();
+            }
+            else if (giaMin >= 0 && giaMax == 0)
+            {
+                res = res.Where(x => x.GiaBan >= giaMin).OrderBy(x => x.GiaBan).ToList();
+            }
+            else if (giaMax >= 0 && giaMin == 0)
+            {
+                res = res.Where(x => x.GiaBan <= giaMax).OrderBy(x => x.GiaBan).ToList();
+            }
+
+            return res.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+
+        }
+
+
+
     }
 }

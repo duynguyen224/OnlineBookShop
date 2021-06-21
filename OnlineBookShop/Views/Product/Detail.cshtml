@@ -4,8 +4,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var RecommendActive = (List<OnlineBookShop.Entities.Sach>)ViewBag.RecommendItemActive;
     var RecommendItem = (List<OnlineBookShop.Entities.Sach>)ViewBag.RecommendItem;
+    var qty = 1;
 
 }
+@using System.Globalization
+
+
+
+
+<style>
+    .productinfo p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        color: #ffa31a;
+    }
+</style>
+
+<style>
+    .product-information span span {
+        color: #FE980F;
+        float: left;
+        font-family: 'Roboto', sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        margin-right: 20px;
+        margin-top: 0px;
+    }
+
+    .view-product img {
+        border: 1px solid #F7F7F0;
+        height: 343px;
+        width: 100%;
+    }
+</style>
+
 
 <section>
     <div class="container">
@@ -43,7 +76,7 @@
                     <!--product-details-->
                     <div class="col-sm-4">
                         <div class="view-product">
-                            <img src="@Url.Content(Model.AnhBia)" alt="" />
+                            <img src="@Url.Content(Model.AnhBia)" alt="" style="width:300px; height:400px" />
                         </div>
                         <div id="similar-product" class="carousel slide" data-ride="carousel">
 
@@ -64,22 +97,22 @@
                         </div>
 
                     </div>
+                    @*div col sm7*@
+
                     <div class="col-sm-7">
                         <div class="product-information">
                             <!--/product-information-->
                             <img src="~/Assets/Admin2/images/product-details/new.jpg" class="newarrival" alt="" />
                             <h2>@Model.TenSach</h2>
-                            <p>Đã bán: 100</p>
                             <img src="~/Assets/Admin2/images/product-details/rating.png" alt="" />
+                            <p>Đã bán: 100</p>
                             <span>
-                                <span>@Model.GiaBan VND</span>
-                                <label>Quantity:</label>
-                                <input type="text" value="1" />
-                                <button type="button" class="btn btn-fefault cart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    Add to cart
+                                <span>
+                                    <p>@(Convert.ToDouble(Model.GiaBan).ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN")))</p>
+                                </span>
+                                <button type="submit" class="btn btn-fefault cart">
+                                    <a href="/gio-hang?productID=@Model.ID&quantity=1" class="" style="color:white"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                 </button>
-
                             </span>
                             <p><b>Availability:</b> In Stock</p>
                             <p><b>Condition:</b> New</p>
@@ -88,31 +121,17 @@
                         </div><!--/product-information-->
                     </div>
 
-
-
                 </div><!--/product-details-->
 
                 <div class="blog-post-area">
                     <h2 class="title text-center">Chi tiết sản phẩm</h2>
                     <div class="single-blog-post">
-                        <a href="">
-                            <img src="@Url.Content(Model.AnhBia)" alt="" style="width:20%; height:20%">
+                        <a href="#">
+                            <img src="@Url.Content(Model.AnhBia)" alt="" style="width:100px; height:140px">
+                            <img src="@Url.Content(Model.BiaSau)" alt="" style="width:100px; height:140px">
+
                         </a>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </p> <br>
-
-                        <p>
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                        </p> <br>
-
-                        <p>
-                            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p> <br>
-
-                        <p>
-                            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-                        </p>
+                        @Html.Raw(Model.Detail)
                         <div class="pager-area">
                             <ul class="pager pull-right">
                                 <li><a href="#">Pre</a></li>
@@ -131,16 +150,18 @@
                             <div class="item active">
                                 @foreach (var item in RecommendActive)
                                 {
+                                    var url = "/chi-tiet/" + @item.MetaTitle + "-" + @item.ID;
+
                                     <div class="col-sm-4">
                                         <div class="product-image-wrapper">
                                             <div class="single-products">
                                                 <div class="productinfo text-center">
-                                                    <a href="#">
-                                                        <img src="@Url.Content(item.AnhBia)" alt="" style="width:30%; height:30%" />
-                                                        <h2>@item.TenSach</h2>
-                                                        <h3>@item.GiaBan VND</h3>
-                                                        <p>@item.MoTa</p>
-                                                        <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                                    <a href="@url">
+                                                        <img src="@Url.Content(item.AnhBia)" alt="" style="width:150px; height:200px" />
+                                                        <p>@item.TenSach</p>
+                                                        <p>@(Convert.ToDouble(item.GiaBan).ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN")))</p>
+
+                                                        <a href="/gio-hang?productId=@item.ID&quantity=1" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 
                                                     </a>
                                                 </div>
@@ -153,15 +174,21 @@
                             <div class="item">
                                 @foreach (var item in RecommendItem)
                                 {
+                                    var url = "/chi-tiet/" + @item.MetaTitle + "-" + @item.ID;
+
                                     <div class="col-sm-4">
                                         <div class="product-image-wrapper">
                                             <div class="single-products">
                                                 <div class="productinfo text-center">
-                                                    <img src="@Url.Content(item.AnhBia)" alt="" style="width:30%; height:30%" />
-                                                    <h2>@item.TenSach</h2>
-                                                    <h3>@item.GiaBan VND</h3>
-                                                    <p>@item.MoTa</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                                    <a href="@url">
+                                                        <img src="@Url.Content(item.AnhBia)" alt="" style="width:150px; height:200px" />
+                                                        <h4 style="font-size:18px">@item.TenSach</h4>
+
+                                                        <p>@(Convert.ToDouble(item.GiaBan).ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN")))</p>
+
+
+                                                        <a href="/gio-hang?productId=@item.ID&quantity=1" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

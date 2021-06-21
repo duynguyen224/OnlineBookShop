@@ -18,6 +18,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         // GET: Admin/Author
         public ActionResult Index(string searchString = "", int page = 1, int pageSize = 5)
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             TacGiaDao dao = new TacGiaDao();
             var list = dao.listAll(searchString, page, pageSize);
             ViewBag.searchString = searchString;
@@ -26,6 +31,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             return View();
         }
         [HttpPost]
@@ -44,6 +54,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             TacGiaDao dao = new TacGiaDao();
             var listTG = dao.listAll();
             var res = listTG.Where(x => x.ID == id).FirstOrDefault();
@@ -65,6 +80,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             TacGiaDao dao = new TacGiaDao();
             var res = dao.listAll().Where(x => x.ID == id).FirstOrDefault();
             return View(res);
@@ -81,6 +101,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(TacGia tg)
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             TacGiaDao dao = new TacGiaDao();
             dao.deleteTacGia(tg);
             return RedirectToAction("Index", "Author");

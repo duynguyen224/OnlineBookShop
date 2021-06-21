@@ -1,0 +1,59 @@
+﻿@model OnlineBookShop.Entities.TinTuc
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">XÓA SÁCH</h6>
+    </div>
+    <div class="card-body">
+        <h7>Bạn có chắc chắn muốn xóa?</h7>
+        <div>
+            <hr />
+
+            @*this*@
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Tiêu đề</th>
+                    <th>Ngày đăng</th>
+                    <th>Ảnh bìa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(model => model.Name)</td>
+                    <td>@Html.DisplayFor(model => model.CreatedDate)</td>
+                    <td>
+                        <img src="@Url.Content(Model.Image)" alt="" style="height:120px; width:90px" />
+                    </td>
+
+                </tr>
+            </tbody>
+
+        </table>
+
+
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
+        </div>
+
+    </div>
+
+</div>
+
+
+

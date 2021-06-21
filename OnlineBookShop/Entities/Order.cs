@@ -19,8 +19,6 @@ namespace OnlineBookShop.Entities
 
         public DateTime? CreatedDate { get; set; }
 
-        public int? CustomerID { get; set; }
-
         [StringLength(100)]
         public string ShipName { get; set; }
 

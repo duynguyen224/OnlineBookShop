@@ -18,11 +18,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         public ActionResult Index(string searchString = "", string searchField = "", int giaMin = 0, int giaMax = 0, int page = 1, int pageSize = 5)
         {
 
-            //if (Session["username"] == null)
-            //{
-            //    Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
-            //    return RedirectToAction("Login", "User", new { area = "" });
-            //}
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
 
             List<SearchField> list = new List<SearchField>()
             {
@@ -50,7 +50,6 @@ namespace OnlineBookShop.Areas.Admin.Controllers
             {
                 ViewBag.giaMin = giaMin;
                 ViewBag.giaMax = giaMax;
-
             }
             return View(listBook);
         }
@@ -59,10 +58,17 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             setViewBag();
             return View();
         }
         [HttpPost]
+        [ValidateInput(false)]
+
         public ActionResult Create(BookDetails bd)
         {
             setViewBag();
@@ -131,6 +137,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             SachDao dao = new SachDao();
             var list = dao.listAllBook();
             var res = list.Where(x => x.ID == id).FirstOrDefault();
@@ -139,6 +150,8 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
+
         public ActionResult Edit(BookDetails bd_new)
         {
             setViewBag(bd_new.ID);
@@ -216,6 +229,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             SachDao dao = new SachDao();
             var list = dao.listAllBook();
             var res = list.Where(x => x.ID == id).FirstOrDefault();
@@ -234,6 +252,11 @@ namespace OnlineBookShop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(BookDetails bd)
         {
+            if (Session["username"] == null)
+            {
+                Session["thongbao"] = "Cần đăng nhập trước khi vào Admin";
+                return RedirectToAction("Login", "User", new { area = "" });
+            }
             SachDao dao = new SachDao();
             dao.deletSach(bd);
             return RedirectToAction("Index", "Home");

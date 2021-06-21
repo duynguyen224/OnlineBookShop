@@ -1,0 +1,25 @@
+﻿@model List<OnlineBookShop.Models.CartItem>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section jsFooter{
+
+    <script src="~/Assets/Admin2/js/Controller/CartController.js"></script>
+}
+
+<section id="cart_items">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="~/Home/Index">Home</a></li>
+                <li class="active">Shopping Cart</li>
+            </ol>
+        </div>
+        <div class="table-responsive cart_info">
+            <h2>Mua hàng thành công</h2>
+
+        </div>
+    </div>
+</section> <!--/#cart_items-->
